@@ -104,7 +104,7 @@ $_SESSION['Authenticated'] = false
 						</div>
 				
 						<div class="form-group">
-							<p>Already registered? <a href="index.html">Sign In</a></p>
+							<p>Already registered? <a href="index.php">Sign In</a></p>  
 						</div>
 						<div class="form-group">
 							<input type="submit" value="Sign Up" class="btn btn-primary">
