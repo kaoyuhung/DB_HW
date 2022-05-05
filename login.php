@@ -7,7 +7,7 @@
    $dbuserpassword = '';
 
    try{
-        if (empty($_POST['account']) || empty($_POST['password'])) {
+        if ($_POST['account']=="" || $_POST['password']=="") {
             throw new Exception("請輸入帳號和密碼");
         } 
         $act = $_POST['account'];
