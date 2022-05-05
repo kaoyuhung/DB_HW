@@ -24,8 +24,8 @@
                 $_SESSION['phonenumber'] = $row[6];
                 $_SESSION['name'] = $row[2];
                 $_SESSION['identity'] = $row[3];
-                // $_SESSION['latitude'] = $row[4];
-                // $_SESSION['longitude'] = $row[5];
+                $_SESSION['latitude'] = $row[4];
+                $_SESSION['longitude'] = $row[5];
                 $_SESSION['balance'] = $row[7];
                 header("Location:nav.php");
                 exit();

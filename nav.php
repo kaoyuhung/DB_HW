@@ -45,12 +45,12 @@
           <div class="col-xs-12">
             Accouont: <?php echo $_SESSION['name']?>, <?php echo $_SESSION['identity']?>, 
             PhoneNumber: <?php echo $_SESSION['phonenumber']?>,  
-            <!-- location: <?php echo $_SESSION['latitude']?>, <?php echo $_SESSION['longitude']?> -->
+            location: <?php echo $_SESSION['latitude']?>, <?php echo $_SESSION['longitude']?>
             
-            <!-- <button type="button " style="margin-left: 5px;" class=" btn btn-info " data-toggle="modal"
-            data-target="#location">edit location</button> -->
+            <button type="button " style="margin-left: 5px;" class=" btn btn-info " data-toggle="modal"
+            data-target="#location">edit location</button>
             <!--  -->
-            <!-- <div class="modal fade" id="location"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="location"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div class="modal-dialog  modal-sm">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -69,9 +69,9 @@
                   </div>
                 </div>
               </div>
-            </div> -->
+            </div> 
             
-            <!--  -->
+
             walletbalance: <?php echo $_SESSION['balance']?>
             <!-- Modal -->
             <button type="button " style="margin-left: 5px;" class=" btn btn-info " data-toggle="modal"
