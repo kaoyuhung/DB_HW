@@ -8,7 +8,7 @@
 
    try{
         if (empty($_POST['account']) || empty($_POST['password'])) {
-            throw new Exception('1');
+            throw new Exception("請輸入帳號和密碼");
         } 
         $act = $_POST['account'];
         $pwd = $_POST['password'];
@@ -24,11 +24,11 @@
                 header("Location:nav.html");
                 exit();
             } else {
-                throw new Exception('2');
+                throw new Exception("密碼錯誤");
             }
         } 
         else {
-            throw new Exception('3');
+            throw new Exception("帳號不存在");
         }
     } 
     catch (Exception $e) {
@@ -40,7 +40,7 @@
         <html>
         <body>
         <script>
-        alert($msg+"login failed !!");
+        alert("$msg");
         window.location.replace("index.php");
         </script>
         </body>
