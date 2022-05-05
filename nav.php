@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!doctype html>
 <html lang="en">
 
@@ -40,12 +43,14 @@
         <h3>Profile</h3>
         <div class="row">
           <div class="col-xs-12">
-            Accouont: sherry, user, PhoneNumber: 0912345678,  location: 24.786944626633865, 120.99753981198887
+            Accouont: <?php echo $_SESSION['name']?>, <?php echo $_SESSION['identity']?>, 
+            PhoneNumber: <?php echo $_SESSION['phonenumber']?>,  
+            <!-- location: <?php echo $_SESSION['latitude']?>, <?php echo $_SESSION['longitude']?> -->
             
-            <button type="button " style="margin-left: 5px;" class=" btn btn-info " data-toggle="modal"
-            data-target="#location">edit location</button>
+            <!-- <button type="button " style="margin-left: 5px;" class=" btn btn-info " data-toggle="modal"
+            data-target="#location">edit location</button> -->
             <!--  -->
-            <div class="modal fade" id="location"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <!-- <div class="modal fade" id="location"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div class="modal-dialog  modal-sm">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -64,12 +69,10 @@
                   </div>
                 </div>
               </div>
-            </div>
-
-
-
+            </div> -->
+            
             <!--  -->
-            walletbalance: 100
+            walletbalance: <?php echo $_SESSION['balance']?>
             <!-- Modal -->
             <button type="button " style="margin-left: 5px;" class=" btn btn-info " data-toggle="modal"
               data-target="#myModal">Add value</button>
@@ -84,18 +87,30 @@
                     <input type="text" class="form-control" id="value" placeholder="enter add value">
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Add</button>
+                    <button type="button" onclick="add()" class="btn btn-default" data-dismiss="modal">Add</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
-
+        <script>
+          function add() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                alert(this.responseText);
+                location.reload()
+              }
+            };
+            xhr.open("POST", "add_balance.php", true);
+            xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xhr.send("number="+document.getElementById("value").value);
+          }
+        </script>
         <!-- 
                 
-             -->
+        -->
         <h3>Search</h3>
         <div class=" row  col-xs-8">
           <form class="form-horizontal" action="/action_page.php">

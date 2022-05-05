@@ -20,8 +20,14 @@
             $row = $stmt->fetch();
             if ($row['password'] == hash('sha256', $row['salt'] . $pwd)) {
                 $_SESSION['Authenticated'] = true;
-                $_SESSION['username'] = $row[0];
-                header("Location:nav.html");
+                $_SESSION['account'] = $row[0];
+                $_SESSION['phonenumber'] = $row[6];
+                $_SESSION['name'] = $row[2];
+                $_SESSION['identity'] = $row[3];
+                // $_SESSION['latitude'] = $row[4];
+                // $_SESSION['longitude'] = $row[5];
+                $_SESSION['balance'] = $row[7];
+                header("Location:nav.php");
                 exit();
             } else {
                 throw new Exception("密碼錯誤");
