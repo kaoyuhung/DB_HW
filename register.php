@@ -48,9 +48,9 @@
         if ($stmt->rowCount()==0){
             $salt = strval(rand(1000, 9999));
             $hashvalue = hash('sha256', $salt . $pwd);
-            $stmt = $conn->prepare("insert into user values (:account,:pwd,:name,:identity,:latitude,:longitude,:phonenumber,:balance)");
+            $stmt = $conn->prepare("insert into user values (:account,:pwd,:name,:identity,:latitude,:longitude,:phonenumber,:balance,:salt)");
             $stmt->execute(array('account' => $account, 'pwd' => $hashvalue,'name' => $name, 'identity' => 'user', 
-                                'latitude' => $floatlat, 'longitude' => $floatlong, 'phonenumber' => $phone, 'balance' => 0));
+                                'latitude' => $floatlat, 'longitude' => $floatlong, 'phonenumber' => $phone, 'balance' => 0, 'salt' => $salt));
             $_SESSION['Authenticated'] = true;
             echo <<<EOT
             <!DOCTYPE html>
