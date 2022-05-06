@@ -16,9 +16,6 @@
         $lat = $_POST['store_lat'];
         $long = $_POST['store_long'];
         
-        // 判斷店名跟類別還沒寫
-        
-        
         $floatlong = (float)$long;
         $floatlat = (float)$lat;
         if(strval($floatlat)!=$lat || $floatlat>90.0 || $floatlat<-90.0){
@@ -53,6 +50,9 @@
             </html>
             EOT;
             exit();
+        }
+        else{
+            throw new Exception("店名已被註冊過!");
         }
     }
     catch (Exception $e){

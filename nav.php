@@ -1,5 +1,28 @@
 <?php
   session_start();
+  $dbservername='localhost';
+  $dbname='hw2';
+  $dbusername='root';
+  $dbpassword='';
+  $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $stmt=$conn->prepare("select * from store where owner=:account");
+  $stmt->execute(array('account' => $_SESSION['account']));
+  if ($stmt->rowCount()==0){
+    $disable = "";
+    $store_name="macdonald";
+    $store_type="fast food";
+    $latitude="121.00028167648875";
+    $longitude="24.78472733371133";
+  }
+  else{
+    $row = $stmt->fetch();
+    $disable = "disabled";
+    $store_name=$row[0];
+    $store_type=$row[1];
+    $latitude=$row[2];
+    $longitude=$row[3];
+  }
 ?>
 <!doctype html>
 <html lang="en">
@@ -299,19 +322,19 @@
             <div class="row">
               <div class="col-xs-2">
                 <label for="store_name">shop name</label>
-                <input class="form-control" id="store_name" placeholder="macdonald" type="text" autocomplete="off" name = "store_name">
+                <input class="form-control" id="store_name" placeholder=<?php echo $store_name ?> type="text" autocomplete="off" name = "store_name" oninput="check_name(this.value)" <?php echo $disable ?> ><br><label id="msg">Type your store name.</label>
               </div>
               <div class="col-xs-2">
                 <label for="store_type">shop category</label>
-                <input class="form-control" id="store_type" placeholder="fast food" type="text" autocomplete="off" name = "store_type">
+                <input class="form-control" id="store_type" placeholder=<?php echo $store_type ?> type="text" autocomplete="off" name = "store_type" <?php echo $disable ?> >
               </div>
               <div class="col-xs-2">
                 <label for="store_lat">latitude</label>
-                <input class="form-control" id="store_lat" placeholder="24.78472733371133" type="text" autocomplete="off" name = "store_lat">
+                <input class="form-control" id="store_lat" placeholder=<?php echo $latitude ?> type="text" autocomplete="off" name = "store_lat" <?php echo $disable ?> >
               </div>
               <div class="col-xs-2">
                 <label for="store_long">longitude</label>
-                <input class="form-control" id="store_long" placeholder="121.00028167648875" type="text" autocomplete="off" name = "store_long">
+                <input class="form-control" id="store_long" placeholder=<?php echo $longitude ?> type="text" autocomplete="off" name = "store_long" <?php echo $disable ?> >
               </div>
             </div>
 
@@ -320,7 +343,7 @@
 
           <div class=" row" style=" margin-top: 25px;">
             <div class=" col-xs-3">
-            <input type="submit" value="register" class="btn btn-primary">
+            <input type="submit" value="register" class="btn btn-primary" <?php echo $disable ?> >
             </div>
           </div>
         </form>
@@ -485,6 +508,20 @@
         $(this).tab('show');
       });
     });
+
+   
+		function check_name(name){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("msg").innerHTML = this.responseText;
+				}
+			};
+			xhttp.open("POST", "check_store_name_ajax.php", true);
+			xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xhttp.send("store_name="+name);
+    	}
+	
   </script>
 
   <!-- Option 2: Separate Popper and Bootstrap JS -->

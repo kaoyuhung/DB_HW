@@ -84,7 +84,7 @@ $_SESSION['Authenticated'] = false
 						</div>
 						<div class="form-group">
 							<label for="Account" class="sr-only">Account</label>
-							<input type="text" class="form-control" id="Account" placeholder="Account" autocomplete="off" oninput="check_account(this.value);" name = "account"><label id="msg"></label><br>
+							<input type="text" class="form-control" id="Account" placeholder="Account" autocomplete="off" oninput="check_account(this.value);" name = "account"><label id="msg">Type your acccout.</label><br>
 						</div>
 						<div class="form-group">
 							<label for="password" class="sr-only">Password</label>

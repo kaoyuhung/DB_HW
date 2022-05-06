@@ -3,19 +3,19 @@ $dbservername='localhost';
 $dbname='hw2';
 $dbusername='root';
 $dbpassword='';
-if (!isset($_REQUEST['account']) || $_REQUEST['account']==""){
-    echo 'Type your acccout.';
+if (!isset($_REQUEST['store_name']) || $_REQUEST['store_name']==""){
+    echo 'Type your store name.';
     exit();
 }
-$account=$_REQUEST['account'];
+$name=$_REQUEST['store_name'];
 $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$stmt=$conn->prepare("select account from user where account=:account");
-$stmt->execute(array('account' => $account));    
+$stmt=$conn->prepare("select * from store where store_name=:name");
+$stmt->execute(array('name' => $name));    
 if ($stmt->rowCount()==0){
     echo 'Avaliable';
 }
 else{
-    echo 'This account has been used.';
+    echo 'This store name has been used.';
 }
 ?>
