@@ -34,7 +34,7 @@
     <ul class="nav nav-tabs">
       <li class="active"><a href="#home">Home</a></li>
       <li><a href="#menu1">shop</a></li>
-
+      <li><a href="index.php">Logout</a><li>
 
     </ul>
 
@@ -468,7 +468,6 @@
 
 
       </div>
-
 
 
     </div>
