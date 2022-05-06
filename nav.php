@@ -65,7 +65,7 @@
                     <input type="text" class="form-control" id="longitude" placeholder="enter longitude">
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Edit</button>
+                    <button type="button" onclick="edit()" class="btn btn-default" data-dismiss="modal">Edit</button>
                   </div>
                 </div>
               </div>
@@ -95,6 +95,19 @@
           </div>
         </div>
         <script>
+          function edit() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                alert(this.responseText);
+                location.reload()
+              }
+            };
+            xhr.open("POST", "edit_location.php", true);
+            xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xhr.send("latitude="+document.getElementById("latitude").value+"longitude="+document.getElementById("longitude").value);
+          }
+          
           function add() {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
