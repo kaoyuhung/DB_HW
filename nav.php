@@ -34,8 +34,7 @@
     <ul class="nav nav-tabs">
       <li class="active"><a href="#home">Home</a></li>
       <li><a href="#menu1">shop</a></li>
-      <li><a href="index.php">Logout</a><li>
-
+      <button type="button" onclick="logout()" class="btn btn-info" data-dismiss="modal">Logout</button>
     </ul>
 
     <div class="tab-content">
@@ -95,6 +94,10 @@
           </div>
         </div>
         <script>
+          function logout(){
+            alert("已登出");
+            location.replace(href = "index.php");
+          }
           function edit() {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
