@@ -307,11 +307,11 @@
               </div>
               <div class="col-xs-2">
                 <label for="store_lat">latitude</label>
-                <input class="form-control" id="store_lat" placeholder="121.00028167648875" type="text" autocomplete="off" name = "store_lat">
+                <input class="form-control" id="store_lat" placeholder="24.78472733371133" type="text" autocomplete="off" name = "store_lat">
               </div>
               <div class="col-xs-2">
                 <label for="store_long">longitude</label>
-                <input class="form-control" id="store_long" placeholder="24.78472733371133" type="text" autocomplete="off" name = "store_long">
+                <input class="form-control" id="store_long" placeholder="121.00028167648875" type="text" autocomplete="off" name = "store_long">
               </div>
             </div>
 
