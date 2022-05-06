@@ -293,36 +293,37 @@
         </div>
       </div>
       <div id="menu1" class="tab-pane fade">
+        <form action="create_store.php" method="post" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+          <h3> Start a business </h3>
+          <div class="form-group ">
+            <div class="row">
+              <div class="col-xs-2">
+                <label for="store_name">shop name</label>
+                <input class="form-control" id="store_name" placeholder="macdonald" type="text" autocomplete="off" name = "store_name">
+              </div>
+              <div class="col-xs-2">
+                <label for="store_type">shop category</label>
+                <input class="form-control" id="store_type" placeholder="fast food" type="text" autocomplete="off" name = "store_type">
+              </div>
+              <div class="col-xs-2">
+                <label for="store_lat">latitude</label>
+                <input class="form-control" id="store_lat" placeholder="121.00028167648875" type="text" autocomplete="off" name = "store_lat">
+              </div>
+              <div class="col-xs-2">
+                <label for="store_long">longitude</label>
+                <input class="form-control" id="store_long" placeholder="24.78472733371133" type="text" autocomplete="off" name = "store_long">
+              </div>
+            </div>
 
-        <h3> Start a business </h3>
-        <div class="form-group ">
-          <div class="row">
-            <div class="col-xs-2">
-              <label for="ex5">shop name</label>
-              <input class="form-control" id="ex5" placeholder="macdonald" type="text" >
-            </div>
-            <div class="col-xs-2">
-              <label for="ex5">shop category</label>
-              <input class="form-control" id="ex5" placeholder="fast food" type="text" >
-            </div>
-            <div class="col-xs-2">
-              <label for="ex6">latitude</label>
-              <input class="form-control" id="ex6" placeholder="121.00028167648875" type="text" >
-            </div>
-            <div class="col-xs-2">
-              <label for="ex8">longitude</label>
-              <input class="form-control" id="ex8" placeholder="24.78472733371133" type="text" >
+          </div>
+
+
+          <div class=" row" style=" margin-top: 25px;">
+            <div class=" col-xs-3">
+            <input type="submit" value="register" class="btn btn-primary">
             </div>
           </div>
-        </div>
-
-
-
-        <div class=" row" style=" margin-top: 25px;">
-          <div class=" col-xs-3">
-            <button type="button" class="btn btn-primary"  >register</button>
-          </div>
-        </div>
+        </form>
         <hr>
         <h3>ADD</h3>
 
