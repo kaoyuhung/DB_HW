@@ -43,7 +43,7 @@
         <h3>Profile</h3>
         <div class="row">
           <div class="col-xs-12">
-            Accouont: <?php echo $_SESSION['name']?>, <?php echo $_SESSION['identity']?>, 
+            Accouont: <?php echo $_SESSION['account']?>, <?php echo $_SESSION['identity']?>, 
             PhoneNumber: <?php echo $_SESSION['phonenumber']?>,  
             location: <?php echo $_SESSION['latitude']?>, <?php echo $_SESSION['longitude']?>
             
