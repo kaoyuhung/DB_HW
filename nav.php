@@ -105,7 +105,8 @@
             };
             xhr.open("POST", "edit_location.php", true);
             xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-            xhr.send("latitude="+document.getElementById("latitude").value+"longitude="+document.getElementById("longitude").value);
+            xhr.send("latitude="+document.getElementById("latitude").value+
+                     "&longitude="+document.getElementById("longitude").value);
           }
 
           function add() {
