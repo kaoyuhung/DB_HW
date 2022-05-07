@@ -7,8 +7,8 @@
     $dbpassword = '';
     
     try{
-        if($_POST['store_name'] == "" || $_POST['store_type'] == "" || $_POST['store_lat'] == ""
-        || $_POST['store_long'] == ""){
+        if($_POST['store_name'] == "" || $_POST['store_type'] == "" || $_POST['store_lat'] == "" || 
+           $_POST['store_long'] == "" || preg_match("/^\s+$/",$_POST['store_name'])){
             throw new Exception("有欄位空白!");  
         }
         $name = $_POST['store_name'];

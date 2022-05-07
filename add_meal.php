@@ -6,7 +6,8 @@
     $dbpassword = '';
 
     try{
-        if($_POST["meal_name"] == "" || $_POST["price"] == "" || $_POST["quantity"] == "" || $_FILES["image"]["name"] == ""){
+        if($_POST["meal_name"]=="" || $_POST["price"] == "" || $_POST["quantity"] == "" || $_FILES["image"]["name"] == ""
+            || preg_match("/^\s+$/",$_POST["meal_name"]) ){
             throw new Exception("有欄位空白！");
         }
         if(!preg_match("/^[1-9][0-9]*$/",$_POST['price'])){
@@ -20,10 +21,6 @@
         if($_SESSION['identity'] == 'user'){
             throw new Exception("你不是店長:(");
         }
-        // echo $_POST["meal_name"]."<br>";
-        // echo $_FILES["image"]["name"]."<br>";
-        // echo $_FILES["image"]["type"]."<br>";
-        // echo $_FILES["image"]["tmp_name"]."<br>";
         $file = fopen($_FILES["image"]["tmp_name"], "rb");
         $fileContents = fread($file, filesize($_FILES["image"]["tmp_name"])); 
         fclose($file);

@@ -3,7 +3,7 @@ $dbservername='localhost';
 $dbname='hw2';
 $dbusername='root';
 $dbpassword='';
-if (!isset($_REQUEST['store_name']) || $_REQUEST['store_name']==""){
+if (!isset($_REQUEST['store_name']) || $_REQUEST['store_name']=="" || preg_match("/^\s+$/",$_POST['store_name'])){
     echo 'Type your store name.';
     exit();
 }
