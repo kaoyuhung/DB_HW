@@ -348,7 +348,7 @@
           </div>
         </form>
         <hr>
-        <form action="add_meal.php" method = "post" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+        <form action="add_meal.php" method = "post" class="fh5co-form animate-box" data-animate-effect="fadeIn" enctype="multipart/form-data">
           <h3>ADD</h3>
           <div class="form-group ">
             <div class="row">
@@ -373,14 +373,15 @@
 
               <div class=" col-xs-3">
                 <label for="ex12">上傳圖片</label>
-                <input id="myFile" type="file" name="myFile" multiple class="file-loading" name="image">
+                <input id="myFile" type="file" name="image" multiple class="file-loading">
 
               </div>
               <div class=" col-xs-3">
 
-                <button style=" margin-top: 15px;" type="button" class="btn btn-primary">Add</button>
-        
+                <!-- <button style=" margin-top: 15px;" type="button" class="btn btn-primary">Add</button> -->
+                <input type="submit" value="add" class="btn btn-primary">
               </div>
+              
             </div>
           </div>
         </form>
