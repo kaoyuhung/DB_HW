@@ -33,11 +33,14 @@
             $stmt = $conn->prepare("insert into store values (:store_name,:type,:latitude,:longitude,:owner)");
             $stmt->execute(array('store_name' => $name, 'type' => $type, 'latitude' => $floatlat, 'longitude' => $floatlong, 
             'owner' => $_SESSION['account']));
+            $stmt = $conn->prepare("UPDATE user SET identity = 'manager' where account = :account");
+            $stmt->execute(array('account' => $_SESSION['account']));
             $_SESSION['store_Authenticated'] = true;
             $_SESSION['store_name'] = $name;
             $_SESSION['store_type'] = $type;
             $_SESSION['store_latitude'] = $lat;
             $_SESSION['store_longitude'] = $long;
+            $_SESSION['identity'] = 'manager';
             echo <<<EOT
             <!DOCTYPE html>
             <html>

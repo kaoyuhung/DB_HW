@@ -57,7 +57,7 @@
     <ul class="nav nav-tabs">
       <li class="active"><a href="#home">Home</a></li>
       <li><a href="#menu1">shop</a></li>
-      <button type="button" onclick="logout()" class="btn btn-info" data-dismiss="modal">Logout</button>
+      <button type="button" onclick="logout()" class="btn btn-info" data-dismiss="modal" style="margin-left: 900px;">Logout</button>
     </ul>
 
     <div class="tab-content">
@@ -348,41 +348,42 @@
           </div>
         </form>
         <hr>
-        <h3>ADD</h3>
+        <form action="add_meal.php" method = "post" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+          <h3>ADD</h3>
+          <div class="form-group ">
+            <div class="row">
+              <div class="col-xs-6">
+                <label for="ex3">meal name</label>
+                <input class="form-control" id="ex3" type="text" name="meal_name">
+              </div>
+            </div>
+            <div class="row" style=" margin-top: 15px;">
+              <div class="col-xs-3">
+                <label for="ex7">price</label>
+                <input class="form-control" id="ex7" type="text" name="price">
+              </div>
+              <div class="col-xs-3">
+                <label for="ex4">quantity</label>
+                <input class="form-control" id="ex4" type="text" name="quantity">
+              </div>
+            </div>
 
-        <div class="form-group ">
-          <div class="row">
 
-            <div class="col-xs-6">
-              <label for="ex3">meal name</label>
-              <input class="form-control" id="ex3" type="text">
+            <div class="row" style=" margin-top: 25px;">
+
+              <div class=" col-xs-3">
+                <label for="ex12">上傳圖片</label>
+                <input id="myFile" type="file" name="myFile" multiple class="file-loading" name="image">
+
+              </div>
+              <div class=" col-xs-3">
+
+                <button style=" margin-top: 15px;" type="button" class="btn btn-primary">Add</button>
+        
+              </div>
             </div>
           </div>
-          <div class="row" style=" margin-top: 15px;">
-            <div class="col-xs-3">
-              <label for="ex7">price</label>
-              <input class="form-control" id="ex7" type="text">
-            </div>
-            <div class="col-xs-3">
-              <label for="ex4">quantity</label>
-              <input class="form-control" id="ex4" type="text">
-            </div>
-          </div>
-
-
-          <div class="row" style=" margin-top: 25px;">
-
-            <div class=" col-xs-3">
-              <label for="ex12">上傳圖片</label>
-              <input id="myFile" type="file" name="myFile" multiple class="file-loading">
-
-            </div>
-            <div class=" col-xs-3">
-
-              <button style=" margin-top: 15px;" type="button" class="btn btn-primary">Add</button>
-            </div>
-          </div>
-        </div>
+        </form>
 
         <div class="row">
           <div class="  col-xs-8">
