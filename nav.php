@@ -22,6 +22,7 @@
     $store_type=$row[1];
     $latitude=$row[2];
     $longitude=$row[3];
+    $_SESSION['store_name'] = $store_name;
   }
 ?>
 <!doctype html>
