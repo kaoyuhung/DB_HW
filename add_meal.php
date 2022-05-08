@@ -31,6 +31,7 @@
         }
 
         $file = fopen($_FILES["image"]["tmp_name"], "rb");
+        $type = $_FILES["image"]["type"];
         $fileContents = fread($file, filesize($_FILES["image"]["tmp_name"])); 
         fclose($file);
         $fileContents = base64_encode($fileContents);
@@ -44,9 +45,9 @@
 
         $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("insert into meal values (:meal_name,:price,:quantity,:image,:store)");
+        $stmt = $conn->prepare("insert into meal values (:meal_name,:price,:quantity,:image,:store, :image_type)");
         $stmt->execute(array('meal_name' => $name, 'price' => $price,'quantity' => $quantity, 'image' => $fileContents, 
-                                'store' => $store));
+                                'store' => $store, 'image_type' => $type));
         echo <<<EOT
         <!DOCTYPE html>
         <html>
