@@ -493,16 +493,51 @@
                   EOT;
                 }
                 else{
-                  $stmt=$conn->prepare("SELECT * from meal where store=(SELECT store_name from store where owner = :account);");
-                  $stmt->execute(array('account' => $_SESSION['account']));
+                  $stmt=$conn->prepare("SELECT * from meal where store=:store_name");
+                  $stmt->execute(array('store_name' => $store_name));
                   for ($i = 1; $i <= $stmt->rowCount(); $i++) {
                     $row = $stmt->fetch();
                     echo <<< EOT
                     <tbody>
                     <tr>
                     <th scope="row">$i</th>
-                    <td><img src="data:'.jpg';base64,' . $row[3] . '" /></td>
+                    <td><img src="data:$row[5];base64,$row[3]" width="200" heigh="15"></td>
                     <td>$row[0]</td>
+                    <td>$row[1]</td>
+                    <td>$row[2]</td>
+                    <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#coffee-1">
+                      Edit
+                      </button></td>
+                          <div class="modal fade" id="coffee-1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="staticBackdropLabel">coffee Edit</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row" >
+                                    <div class="col-xs-6">
+                                      <label for="ex72">price</label>
+                                      <input class="form-control" id="ex72" type="text">
+                                    </div>
+                                    <div class="col-xs-6">
+                                      <label for="ex42">quantity</label>
+                                      <input class="form-control" id="ex42" type="text">
+                                    </div>
+                                  </div>
+                        
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit</button>
+                                
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    <td><button type="button" class="btn btn-danger">Delete</button></td>
                     </tr>
                     </tbody>
                     EOT;
