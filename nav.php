@@ -417,14 +417,14 @@
                     <td>$row[0]</td>
                     <td>$row[1]</td>
                     <td>$row[2]</td>
-                    <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#coffee-1">
+                    <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#meal-$i">
                       Edit
                       </button></td>
-                          <div class="modal fade" id="coffee-1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal fade" id="meal-$i" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="staticBackdropLabel">coffee Edit</h5>
+                                  <h5 class="modal-title" id="staticBackdropLabel">Edit</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
@@ -432,24 +432,23 @@
                                 <div class="modal-body">
                                   <div class="row" >
                                     <div class="col-xs-6">
-                                      <label for="ex72">price</label>
-                                      <input class="form-control" id="ex72" type="text">
+                                      <label for="price-$row[0]">price</label>
+                                      <input class="form-control" id="price-$row[0]" type="text">
                                     </div>
                                     <div class="col-xs-6">
-                                      <label for="ex42">quantity</label>
-                                      <input class="form-control" id="ex42" type="text">
+                                      <label for="quantity-$row[0]">quantity</label>
+                                      <input class="form-control" id="quantity-$row[0]" type="text">
                                     </div>
                                   </div>
                         
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit</button>
-                                
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" id= $row[0] onclick = "edit_meal(this.id)">Edit</button>
                                 </div>
                               </div>
                             </div>
                           </div>
-                    <td><button type="button" class="btn btn-danger">Delete</button></td>
+                    <td><button type="button" id=$row[0] onclick = "del(this.id)" class="btn btn-danger">Delete</button></td>
                     </tr>
                     </tbody>
                     EOT;
@@ -489,7 +488,34 @@
 			xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 			xhttp.send("store_name="+name);
     	}
-	
+
+      function edit_meal(name){
+        //alert(document.getElementById("2").innerHTML);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+            location.reload();
+          }
+        };
+        xhttp.open("POST", "edit_meal.php", true);
+        xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xhttp.send("store_name="+<?php echo $store_name?>+"&"+"meal_name="+name+"&"
+                    +"price="+document.getElementById("price-"+name).value+"&"+"quantity="+document.getElementById("quantity-"+name).value);
+      }
+
+      function del(name){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+            location.reload();
+          }
+        };
+        xhttp.open("POST", "delete_meal.php", true);
+        xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xhttp.send("store_name="+<?php echo $store_name?>+"&"+"meal_name="+name);
+      }
   </script>
 
   <!-- Option 2: Separate Popper and Bootstrap JS -->
