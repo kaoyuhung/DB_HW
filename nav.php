@@ -252,82 +252,155 @@
                   <td>  <button type="button" class="btn btn-info " data-toggle="modal" data-target="#macdonald">Open menu</button></td>
             
                 </tr>
-           
-
               </tbody> -->
+              <?php
+                  if(isset($_SESSION['search'])){
+                    $store = json_decode($_SESSION['search'],true);
+                    #var_dump($store);
+                    for($i=1;$i<=count($store);$i++){
+                      echo <<< EOT
+                        <tbody>
+                        <tr>
+                          <th scope="row">$i</th>
+                      
+                          <td>{$store[$i-1]['store']}</td>
+                          <td>{$store[$i-1]['type']}</td>
+                        
+                          <td>{$_SESSION['dist']}</td>
+                          <td><button type="button" class="btn btn-info " data-toggle="modal" data-target="#store$i">Open menu</button></td>
+                    
+                        </tr>
+                        </tbody>
+                      EOT;
+                    }
+                  }
+              ?>
             </table>
                 <!-- Modal -->
-  <div class="modal fade" id="macdonald"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">menu</h4>
-        </div>
-        <div class="modal-body">
-         <!--  -->
-  
-         <div class="row">
-          <div class="  col-xs-12">
-            <table class="table" style=" margin-top: 15px;">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Picture</th>
-                 
-                  <th scope="col">meal name</th>
-               
-                  <th scope="col">price</th>
-                  <th scope="col">Quantity</th>
-                
-                  <th scope="col">Order check</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td><img src="Picture/1.jpg" with="50" heigh="10" alt="Hamburger"></td>
-                
-                  <td>Hamburger</td>
-                
-                  <td>80 </td>
-                  <td>20 </td>
-              
-                  <td> <input type="checkbox" id="cbox1" value="Hamburger"></td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td><img src="Picture/2.jpg" with="10" heigh="10" alt="coffee"></td>
-                 
-                  <td>coffee</td>
-             
-                  <td>50 </td>
-                  <td>20</td>
-              
-                  <td><input type="checkbox" id="cbox2" value="coffee"></td>
-                </tr>
-
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-        
-
-         <!--  -->
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Order</button>
+              <?php
+                if(isset($_SESSION['search'])){
+                  for($i=1;$i<=count($store);$i++){
+                    $store_name = $store[$i-1]['store'];
+                    $stmt=$conn->prepare("select * from meal where store=:store");
+                    $stmt->execute(array('store' =>  $store_name));
+                    echo <<< EOT
+                    <div class="modal fade" id="store$i" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">menu</h4>
+                          </div>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="  col-xs-12">
+                              <table class="table" style=" margin-top: 15px;">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Picture</th>
+                                  
+                                    <th scope="col">meal name</th>
+                                
+                                    <th scope="col">price</th>
+                                    <th scope="col">Quantity</th>
+                                  
+                                    <th scope="col">Order check</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                    EOT;
+                    for($j=1;$j<=$stmt->rowCount();$j++){
+                      $row = $stmt->fetch();
+                      echo <<< EOT
+                        <tr>
+                          <th scope="row">$j</th>
+                          <td><img src="data:$row[5];base64,$row[3]" widt="200" height="100"></td>
+                          <td>$row[0]</td>
+                          <td>$row[1]</td>
+                          <td>$row[2]</td>
+                          <td> <input type="checkbox" id="cbox$j" value=$row[0]></td>
+                        </tr>
+                      EOT;
+                    }
+                    echo <<< EOT
+                              </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Order</button>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    EOT;
+                  }
+                }
+              ?>
+          <!-- <div class="modal fade" id="store1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">menu</h4>
+                </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="  col-xs-12">
+                    <table class="table" style=" margin-top: 15px;">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Picture</th>
+                        
+                          <th scope="col">meal name</th>
+                      
+                          <th scope="col">price</th>
+                          <th scope="col">Quantity</th>
+                        
+                          <th scope="col">Order check</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">1</th>
+                          <td><img src="Picture/1.jpg" with="50" heigh="10" alt="Hamburger"></td>
+                        
+                          <td>Hamburger</td>
+                        
+                          <td>80 </td>
+                          <td>20 </td>
+                      
+                          <td> <input type="checkbox" id="cbox1" value="Hamburger"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">2</th>
+                          <td><img src="Picture/2.jpg" with="10" heigh="10" alt="coffee"></td>
+                        
+                          <td>coffee</td>
+                    
+                          <td>50 </td>
+                          <td>20</td>
+                      
+                          <td><input type="checkbox" id="cbox2" value="coffee"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Order</button>
+                  </div>
+              </div>
+            </div>
+          </div> -->
+            
         </div>
       </div>
       
-    </div>
-  </div>
-          </div>
-
-        </div>
       </div>
       <div id="menu1" class="tab-pane fade">
         <form action="create_store.php" method="post" class="fh5co-form animate-box" data-animate-effect="fadeIn">
@@ -527,14 +600,15 @@
         
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
+            if(this.responseText){
+              alert(this.responseText);
+            }
             location.reload();
           }
         };
         
         xhttp.open("POST", "search.php", true);
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        
         xhttp.send("shop_name="+document.getElementById("search1").value
                     +"&"+"distance="+document.getElementById("search2").value
                     +"&"+"lowerbound="+document.getElementById("search3").value
