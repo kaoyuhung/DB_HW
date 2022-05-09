@@ -4,6 +4,8 @@
     $dbname = 'hw2';
     $dbusername = 'root';
     $dbpassword = '';
+    $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     try{
         // echo $_POST['shop_name'].'<br>';
         // echo $_POST['distance'].'<br>';
@@ -17,18 +19,20 @@
         $upperbound = $_POST['upperbound'];
         $meal = $_POST['meal_name'];
         $cat = $_POST['catogory'];
-        
-        $shoop = "'' or 1";
-        $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("SELECT * from store where store_name=:store_name");
-        $stmt->execute(array('store_name' => $shop));
-        $row = $stmt ->fetch();
-        if($stmt->rowCount()==0){
-            echo "QQ";
+        $array=array();
+        if($shop==""){
+            $a = "1";
         }
+        else{
+            $a = "store_name=:store_name";
+            $array['store_name']=$shop;
+        }
+        $stmt = $conn->prepare("SELECT * from store where ".$a);
+        $stmt->execute($array);
+        echo $stmt->rowCount();
     }
     catch (Exception $e){
-        
+        $msg = $e->getMessage();
+        echo $msg;
     }
 ?>
