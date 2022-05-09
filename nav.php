@@ -24,6 +24,9 @@
     $longitude=$row[3];
     $_SESSION['store_name'] = $store_name;
   }
+  $stmt=$conn->prepare("select distinct type from store");
+  $stmt->execute();
+  $catagory = $stmt
 ?>
 <!doctype html>
 <html lang="en">
@@ -154,21 +157,20 @@
         -->
         <h3>Search</h3>
         <div class=" row  col-xs-8">
-          <form class="form-horizontal" action="/action_page.php">
+          <form class="form-horizontal">
             <div class="form-group">
               <label class="control-label col-sm-1" for="Shop">Shop</label>
               <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder="Enter Shop name">
+                <input type="text" class="form-control" placeholder="Enter Shop name" id="search1">
               </div>
               <label class="control-label col-sm-1" for="distance">distance</label>
               <div class="col-sm-5">
 
 
-                <select class="form-control" id="sel1">
+                <select class="form-control" id="search2">
                   <option>near</option>
                   <option>medium </option>
-                  <option>far</option>
-
+                  <option>far</option>  
                 </select>
               </div>
 
@@ -179,22 +181,23 @@
               <label class="control-label col-sm-1" for="Price">Price</label>
               <div class="col-sm-2">
 
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" id="search3">
 
               </div>
               <label class="control-label col-sm-1" for="~">~</label>
               <div class="col-sm-2">
 
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" id="search4">
 
               </div>
               <label class="control-label col-sm-1" for="Meal">Meal</label>
               <div class="col-sm-5">
-                <input type="text" list="Meals" class="form-control" id="Meal" placeholder="Enter Meal">
+                <!-- <input type="text" list="Meals" class="form-control" id="Meal" placeholder="Enter Meal">
                 <datalist id="Meals">
                   <option value="Hamburger">
                   <option value="coffee">
-                </datalist>
+                </datalist> -->
+                <input type="text" class="form-control" id="search5" placeholder="Enter Meal">
               </div>
             </div>
 
@@ -203,14 +206,25 @@
             
               
                 <div class="col-sm-5">
-                  <input type="text" list="categorys" class="form-control" id="category" placeholder="Enter shop category">
+                  <!-- <input type="text" list="categorys" class="form-control" id="category" placeholder="Enter shop category">
                   <datalist id="categorys">
+
                     <option value="fast food">
                
-                  </datalist>
+                  </datalist> -->
+                  <select id="search6" class="form-control">
+                    <!-- <option value="Pendiente">Pendiente</option>
+                    <option value="Frenada">Frenada</option>
+                    <option value="Finalizada">Finalizada</option> -->
+                    <?php
+                      for($i=0;$i<$catagory->rowCount();$i++){
+                          $row = $catagory->fetch();
+                          echo "<option value=".$row[0].">".$row[0]."</option>";
+                      }
+                    ?>
+                  </select><br>
                 </div>
-                <button type="submit" style="margin-left: 18px;"class="btn btn-primary">Search</button>
-              
+                <button type="submit" style="margin-left: 18px;"class="btn btn-primary" onclick="search()">Search</button>
             </div>
           </form>
         </div>
@@ -227,7 +241,7 @@
                
                 </tr>
               </thead>
-              <tbody>
+              <!-- <tbody>
                 <tr>
                   <th scope="row">1</th>
                
@@ -240,9 +254,8 @@
                 </tr>
            
 
-              </tbody>
+              </tbody> -->
             </table>
-
                 <!-- Modal -->
   <div class="modal fade" id="macdonald"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -395,14 +408,12 @@
                   <th scope="col">#</th>
                   <th scope="col">Picture</th>
                   <th scope="col">meal name</th>
-              
                   <th scope="col">price</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Edit</th>
                   <th scope="col">Delete</th>
                 </tr>
-              </thead>
-              
+              </thead> 
                 <?php 
                 if($_SESSION['identity']=='manager'){
                   $stmt=$conn->prepare("SELECT * from meal where store=:store_name");
@@ -457,40 +468,34 @@
                 ?>
             </table>
           </div>
-
         </div>
-
-
       </div>
-
-
     </div>
   </div>
 
   <!-- Option 1: Bootstrap Bundle with Popper -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
   <script>
-    $(document).ready(function () {
-      $(".nav-tabs a").click(function () {
-        $(this).tab('show');
+      $(document).ready(function () {
+        $(".nav-tabs a").click(function () {
+          $(this).tab('show');
+        });
       });
-    });
 
    
-		function check_name(name){
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("msg").innerHTML = this.responseText;
-				}
-			};
-			xhttp.open("POST", "check_store_name_ajax.php", true);
-			xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-			xhttp.send("store_name="+name);
+		  function check_name(name){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("msg").innerHTML = this.responseText;
+          }
+        };
+        xhttp.open("POST", "check_store_name_ajax.php", true);
+        xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xhttp.send("store_name="+name);
     	}
 
       function edit_meal(name){
-        //alert(document.getElementById("2").innerHTML);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
@@ -500,7 +505,7 @@
         };
         xhttp.open("POST", "edit_meal.php", true);
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        xhttp.send("store_name="+<?php echo $store_name?>+"&"+"meal_name="+name+"&"
+        xhttp.send("store_name="+"<?php echo $store_name?>"+"&"+"meal_name="+name+"&"
                     +"price="+document.getElementById("price-"+name).value+"&"+"quantity="+document.getElementById("quantity-"+name).value);
       }
 
@@ -515,6 +520,27 @@
         xhttp.open("POST", "delete_meal.php", true);
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xhttp.send("store_name="+<?php echo $store_name?>+"&"+"meal_name="+name);
+      }
+
+      function search(){
+        var xhttp = new XMLHttpRequest();
+        
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+            location.reload();
+          }
+        };
+        
+        xhttp.open("POST", "search.php", true);
+        xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        
+        xhttp.send("shop_name="+document.getElementById("search1").value
+                    +"&"+"distance="+document.getElementById("search2").value
+                    +"&"+"lowerbound="+document.getElementById("search3").value
+                    +"&"+"upperbound="+document.getElementById("search4").value
+                    +"&"+"meal_name="+document.getElementById("search5").value
+                    +"&"+"catogory="+document.getElementById("search6").value);
       }
   </script>
 
