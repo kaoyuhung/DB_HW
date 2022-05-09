@@ -11,7 +11,7 @@
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $stmt = $conn->prepare("DELETE from meal where store=:store_name and meal_name=:meal_name");
         $stmt->execute(array('meal_name' => $_POST["meal_name"], 'store_name' =>  $_POST["store_name"]));
-        echo "success!";
+        echo "already delete :(";
     }
     catch (Exception $e){
         $msg = $e->getMessage();
