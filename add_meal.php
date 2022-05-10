@@ -18,6 +18,9 @@
         if(preg_match("/^\s*$/", $_FILES["image"]["name"] )){
             throw new Exception("餐點圖片欄位空白!");  
         }
+        if(!preg_match("/^[1-9][0-9]*$/",$_POST["price"])){
+            throw new Exception("請輸入合法價格!");
+        }
         if($_POST["quantity"] != "0"){
             if(!preg_match("/^[1-9][0-9]*$/",$_POST['quantity'])){
                 throw new Exception("請輸入合法數量!");
