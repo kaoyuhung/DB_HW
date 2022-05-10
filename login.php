@@ -7,9 +7,12 @@
    $dbuserpassword = '';
 
    try{
-        if ($_POST['account']=="" || $_POST['password']=="") {
-            throw new Exception("請輸入帳號和密碼");
-        } 
+        if(preg_match("/^\s*$/",$_POST['account'])){
+            throw new Exception("帳號欄位空白!");  
+        }
+        if(preg_match("/^\s*$/",$_POST['password'])){
+            throw new Exception("密碼欄位空白!");  
+        }
         $act = $_POST['account'];
         $pwd = $_POST['password'];
         $conn = new PDO("mysql:host = $dbservername;dbname=$dbname", $dbusername, $dbuserpassword);

@@ -7,9 +7,26 @@
     $dbpassword = '';
 
     try{
-        if ($_POST['account'] == "" || $_POST['name']=="" || $_POST['phonenumber']=="" || $_POST['password']=="" || $_POST['re-password']==""
-            || $_POST['latitude']=="" || $_POST["longitude"]== "" ){
-            throw new Exception("有欄位空白!");  
+        if(preg_match("/^\s*$/",$_POST['account'])){
+            throw new Exception("帳號欄位空白!");  
+        }
+        if(preg_match("/^\s*$/",$_POST['name'])){
+            throw new Exception("姓名欄位空白!");  
+        }
+        if(preg_match("/^\s*$/",$_POST['phonenumber'])){
+            throw new Exception("手機號碼欄位空白!");  
+        }
+        if(preg_match("/^\s*$/",$_POST['password'])){
+            throw new Exception("密碼欄位空白!");  
+        }
+        if(preg_match("/^\s*$/",$_POST['re-password'])){
+            throw new Exception("驗證密碼欄位空白!");  
+        }
+        if(preg_match("/^\s*$/",$_POST['latitude'])){
+            throw new Exception("緯度欄位空白!");  
+        }
+        if(preg_match("/^\s*$/",$_POST["longitude"])){
+            throw new Exception("經度欄位空白!");  
         }
         $account = $_POST['account'];
         $pwd = $_POST['password'];

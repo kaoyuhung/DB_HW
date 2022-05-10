@@ -6,12 +6,17 @@
     $dbpassword = '';
 
     try{
-        if($_POST["meal_name"]=="" || $_POST["price"] == "" || $_POST["quantity"] == "" || $_FILES["image"]["name"] == ""
-            || preg_match("/^\s+$/",$_POST["meal_name"]) ){
-            throw new Exception("有欄位空白！");
+        if(preg_match("/^\s*$/", $_POST["meal_name"] )){
+            throw new Exception("餐點名稱欄位空白!");  
         }
-        if(!preg_match("/^[1-9][0-9]*$/",$_POST['price'])){
-            throw new Exception("請輸入合法價錢!");
+        if(preg_match("/^\s*$/", $_POST["price"])){
+            throw new Exception("餐點價格欄位空白!");  
+        }
+        if(preg_match("/^\s*$/", $_POST["quantity"] )){
+            throw new Exception("餐點數量欄位空白!");  
+        }
+        if(preg_match("/^\s*$/", $_FILES["image"]["name"] )){
+            throw new Exception("餐點圖片欄位空白!");  
         }
         if($_POST["quantity"] != "0"){
             if(!preg_match("/^[1-9][0-9]*$/",$_POST['quantity'])){
