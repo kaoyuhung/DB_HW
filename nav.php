@@ -26,7 +26,9 @@
   }
   $stmt=$conn->prepare("select distinct type from store");
   $stmt->execute();
-  $catagory = $stmt
+  $catagory = $stmt;
+  echo  $store_name;
+  echo  $store_type;
 ?>
 <!doctype html>
 <html lang="en">
@@ -316,7 +318,7 @@
                       echo <<< EOT
                         <tr>
                           <th scope="row">$j</th>
-                          <td><img src="data:$row[5];base64,$row[3]" widt="200" height="100"></td>
+                          <td><img src="data:$row[5];base64,$row[3]" width="200" height="100"></td>
                           <td>$row[0]</td>
                           <td>$row[1]</td>
                           <td>$row[2]</td>
@@ -410,19 +412,19 @@
             <div class="row">
               <div class="col-xs-2">
                 <label for="store_name">shop name</label>
-                <input class="form-control" id="store_name" placeholder=<?php echo $store_name ?> type="text" autocomplete="off" name = "store_name" oninput="check_name(this.value)" <?php echo $disable ?> ><br><label id="msg">Type your store name.</label>
+                <input class="form-control" id="store_name" placeholder="<?php echo $store_name ?>" type="text" autocomplete="off" name = "store_name" oninput="check_name(this.value)" <?php echo $disable ?> ><br><label id="msg">Type your store name.</label>
               </div>
               <div class="col-xs-2">
                 <label for="store_type">shop category</label>
-                <input class="form-control" id="store_type" placeholder=<?php echo $store_type ?> type="text" autocomplete="off" name = "store_type" <?php echo $disable ?> >
+                <input class="form-control" id="store_type" placeholder="<?php echo $store_type ?>" type="text" autocomplete="off" name = "store_type" <?php echo $disable ?> >
               </div>
               <div class="col-xs-2">
                 <label for="store_lat">latitude</label>
-                <input class="form-control" id="store_lat" placeholder=<?php echo $latitude ?> type="text" autocomplete="off" name = "store_lat" <?php echo $disable ?> >
+                <input class="form-control" id="store_lat" placeholder="<?php echo $latitude ?>" type="text" autocomplete="off" name = "store_lat" <?php echo $disable ?> >
               </div>
               <div class="col-xs-2">
                 <label for="store_long">longitude</label>
-                <input class="form-control" id="store_long" placeholder=<?php echo $longitude ?> type="text" autocomplete="off" name = "store_long" <?php echo $disable ?> >
+                <input class="form-control" id="store_long" placeholder="<?php echo $longitude ?>" type="text" autocomplete="off" name = "store_long" <?php echo $disable ?> >
               </div>
             </div>
 
