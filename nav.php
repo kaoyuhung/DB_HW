@@ -167,6 +167,7 @@
               </div>
               
               <label class="control-label col-sm-1" for="distance">distance</label>
+              
               <div class="col-sm-5">
                 <select class="form-control" id="search2">
                   <option>near</option>
@@ -216,8 +217,25 @@
                     ?>
                   </select><br>
                 </div>
-                <button type="submit" style="margin-left: 18px;"class="btn btn-primary" onclick="search()">Search</button>
-            </div>
+
+                <label class="control-label col-sm-1" for="Meal">排序</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="search2">
+                    <option>Shop</option>
+                    <option>distance </option>
+                    <option>meal</option>  
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <select class="form-control" id="search2">
+                    <option>desc</option>
+                    <option>asc</option>
+                  </select>
+                </div>
+                <div class="col-sm-1">
+                  <button type="submit" style="margin-left: 18px;"class="btn btn-primary" onclick="search()">Search</button>
+                </div>
+              </div>
           </form>
         </div>
         <div class="row">
