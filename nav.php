@@ -19,10 +19,14 @@
     $row = $stmt->fetch();
     $disable = "disabled";
     $store_name=$row[0];
+    $store_name_fixed=$row[0];
     $store_type=$row[1];
+    $store_type_fixed=$row[1];
     $latitude=$row[2];
+    $latitude_fixed=$row[2];
     $longitude=$row[3];
-    $_SESSION['store_name'] = $store_name;
+    $longitude_fixed=$row[3];
+    $_SESSION['store_name'] = $store_name_fixed;
   }
   $stmt=$conn->prepare("select distinct type from store");
   $stmt->execute();
@@ -347,19 +351,19 @@
             <div class="row">
               <div class="col-xs-2">
                 <label for="store_name">shop name</label>
-                <input class="form-control" id="store_name" placeholder="<?php echo $store_name ?>" type="text" autocomplete="off" name = "store_name" oninput="check_name(this.value)" <?php echo $disable ?> ><br><label id="msg">Type your store name.</label>
+                <input class="form-control" id="store_name" placeholder="<?php echo $store_name_fixed ?>" type="text" autocomplete="off" name = "store_name" oninput="check_name(this.value)" <?php echo $disable ?> ><br><label id="msg">Type your store name.</label>
               </div>
               <div class="col-xs-2">
                 <label for="store_type">shop category</label>
-                <input class="form-control" id="store_type" placeholder="<?php echo $store_type ?>" type="text" autocomplete="off" name = "store_type" <?php echo $disable ?> >
+                <input class="form-control" id="store_type" placeholder="<?php echo $store_type_fixed ?>" type="text" autocomplete="off" name = "store_type" <?php echo $disable ?> >
               </div>
               <div class="col-xs-2">
                 <label for="store_lat">latitude</label>
-                <input class="form-control" id="store_lat" placeholder="<?php echo $latitude ?>" type="text" autocomplete="off" name = "store_lat" <?php echo $disable ?> >
+                <input class="form-control" id="store_lat" placeholder="<?php echo $latitude_fixed ?>" type="text" autocomplete="off" name = "store_lat" <?php echo $disable ?> >
               </div>
               <div class="col-xs-2">
                 <label for="store_long">longitude</label>
-                <input class="form-control" id="store_long" placeholder="<?php echo $longitude ?>" type="text" autocomplete="off" name = "store_long" <?php echo $disable ?> >
+                <input class="form-control" id="store_long" placeholder="<?php echo $longitude_fixed ?>" type="text" autocomplete="off" name = "store_long" <?php echo $disable ?> >
               </div>
             </div>
 
@@ -428,7 +432,7 @@
                 <?php 
                 if($_SESSION['identity']=='manager'){
                   $stmt=$conn->prepare("SELECT * from meal where store=:store_name");
-                  $stmt->execute(array('store_name' => $store_name));
+                  $stmt->execute(array('store_name' => $store_name_fixed));
                   for ($i = 1; $i <= $stmt->rowCount(); $i++) {
                     $row = $stmt->fetch();
                     echo <<< EOT
