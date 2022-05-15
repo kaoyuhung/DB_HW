@@ -220,14 +220,14 @@
 
                 <label class="control-label col-sm-1" for="Meal">排序</label>
                 <div class="col-sm-2">
-                  <select class="form-control" id="search2">
+                  <select class="form-control" id="sort_key">
                     <option>Shop</option>
                     <option>distance </option>
                     <option>meal</option>  
                   </select>
                 </div>
                 <div class="col-sm-2">
-                  <select class="form-control" id="search2">
+                  <select class="form-control" id="sort">
                     <option>desc</option>
                     <option>asc</option>
                   </select>
@@ -553,7 +553,9 @@
                     +"&"+"lowerbound="+document.getElementById("search3").value
                     +"&"+"upperbound="+document.getElementById("search4").value
                     +"&"+"meal_name="+document.getElementById("search5").value
-                    +"&"+"catogory="+document.getElementById("search6").value);
+                    +"&"+"catogory="+document.getElementById("search6").value
+                    +"&"+"sort_key="+document.getElementById("sort_key").value
+                    +"&"+"sort="+document.getElementById("sort").value);
       }
   </script>
 
