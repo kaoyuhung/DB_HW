@@ -162,31 +162,19 @@
           <form class="form-horizontal">
             <div class="form-group">
               <label class="control-label col-sm-1" for="Shop">Shop</label>
-              <div class="col-sm-3">
+              <div class="col-sm-5">
                 <input type="text" class="form-control" placeholder="Enter Shop name" id="search1">
-              </div>
-              <div class="col-sm-2">
-              <select class="form-control" id="shop_sort">
-                  <option>desc</option>
-                  <option>asc</option>
-              </select>
               </div>
               
               <label class="control-label col-sm-1" for="distance">distance</label>
-              <div class="col-sm-3">
+              <div class="col-sm-5">
                 <select class="form-control" id="search2">
                   <option>near</option>
                   <option>medium </option>
                   <option>far</option>  
                 </select>
               </div>
-              <div class="col-sm-2">
-              <select class="form-control" id="dist_sort">
-                  <option>desc</option>
-                  <option>asc</option>
-              </select>
-              </div>
-
+      
             </div>
 
             <div class="form-group">
@@ -547,9 +535,7 @@
                     +"&"+"lowerbound="+document.getElementById("search3").value
                     +"&"+"upperbound="+document.getElementById("search4").value
                     +"&"+"meal_name="+document.getElementById("search5").value
-                    +"&"+"catogory="+document.getElementById("search6").value
-                    +"&"+"shop_sort="+document.getElementById("shop_sort").value
-                    +"&"+"dist_sort="+document.getElementById("dist_sort").value);
+                    +"&"+"catogory="+document.getElementById("search6").value);
       }
   </script>
 
