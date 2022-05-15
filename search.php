@@ -81,7 +81,7 @@
         }
         if($dis=='near'){
             $query = 'SELECT * from (SELECT * from (SELECT DISTINCT(store) as store,type,((longitude-:long)*(longitude-:long)+(latitude-:lat)*(latitude-:lat)) as dis from meal,store where meal.store = store.store_name and price 
-            BETWEEN :lowerbound and :upperbound and lower(meal_name) like lower(:meal_name)) as H where lower(H.store) like lower(:shop) and type like :type order by dis limit :num2 offset :num1) order by :sort_key desc';
+            BETWEEN :lowerbound and :upperbound and lower(meal_name) like lower(:meal_name)) as H where lower(H.store) like lower(:shop) and type like :type order by dis limit :num2 offset :num1) as A order by :sort_key :sort';
             $stmt = $conn->prepare($query);
             $stmt -> bindValue(":long",(float)$_SESSION['longitude'],PDO::PARAM_STR);
             $stmt -> bindValue(":lat",(float)$_SESSION['latitude'],PDO::PARAM_STR);
@@ -95,7 +95,6 @@
             $stmt -> bindValue(":sort_key",$sort_key,PDO::PARAM_STR);
             $stmt -> bindValue(":sort",$_POST['sort'],PDO::PARAM_STR);
         }
-        
         $stmt->execute(); 
         $_SESSION['search'] = json_encode($stmt->fetchAll(PDO::FETCH_ASSOC)); 
         $_SESSION['dist'] = $dis;
