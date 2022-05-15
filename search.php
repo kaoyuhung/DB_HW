@@ -92,12 +92,12 @@
             $stmt -> bindValue(":type",$cat,PDO::PARAM_STR);
             $stmt -> bindValue(":num1",(int)floor($num*2/3),PDO::PARAM_INT);
             $stmt -> bindValue(":num2",(int)($num-floor($num*2/3)),PDO::PARAM_INT);
-            $stmt -> bindValue(":sort_key",$sort_key,PDO::PARAM_STR);
-            $stmt -> bindValue(":sort",$_POST['sort'],PDO::PARAM_STR);
+            $stmt -> bindParam(":sort_key",$sort_key,PDO::PARAM_STR);
+            $stmt -> bindParam(":sort",$_POST['sort'],PDO::PARAM_STR);
         }
-        #echo $sort_key."___".$_POST['sort'];
         $stmt->execute(); 
-        $_SESSION['search'] = json_encode($stmt->fetchAll(PDO::FETCH_ASSOC)); 
+        $store = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $_SESSION['search'] = json_encode($store); 
         $_SESSION['dist'] = $dis;
     }
     catch (Exception $e){
