@@ -17,6 +17,7 @@
         $dis = $_POST['distance'];
         $lowerbound = $_POST['lowerbound'];
         $upperbound = $_POST['upperbound'];
+        $sort_key = $_POST['sort_key'];
         if(preg_match("/^\s*$/",$lowerbound)){$lowerbound=0;}
         else{
             if(!preg_match("/^[0-9][0-9]*$/",$lowerbound)){
@@ -29,6 +30,12 @@
                 throw new Exception("請輸入合法價格範圍!");
             }
         }
+        if($sort_key=="Shop"){
+            $sort_key="store";
+        }
+        else{
+            $sort_key="dis";
+        }
         $meal = $_POST['meal_name'];
         $cat = $_POST['catogory'];
         $array=array();
@@ -40,13 +47,13 @@
         $array['lat'] = (float)$_SESSION['latitude'];
         $array['long'] = (float)$_SESSION['longitude'];
         $query = 'SELECT count(*) from (SELECT DISTINCT(store),type,((longitude-:long)*(longitude-:long)+(latitude-:lat)*(latitude-:lat)) as dis from meal,store where meal.store = store.store_name and price 
-                  BETWEEN :lowerbound and :upperbound and lower(meal_name) like lower(:meal_name)) as H where lower(H.store) like lower(:shop) and type like :type order by dis desc;';
+                  BETWEEN :lowerbound and :upperbound and lower(meal_name) like lower(:meal_name)) as H where lower(H.store) like lower(:shop) and type like :type';
         $stmt = $conn->prepare($query);
         $stmt->execute($array);
         $num = (string)$stmt->fetch()[0];
         $num = intval($num);
         if($dis=='far'){
-            $query = 'SELECT * from (SELECT DISTINCT(store),type,((longitude-:long)*(longitude-:long)+(latitude-:lat)*(latitude-:lat)) as dis from meal,store where meal.store = store.store_name and price 
+            $query = 'SELECT * from (SELECT DISTINCT(store) as store,type,((longitude-:long)*(longitude-:long)+(latitude-:lat)*(latitude-:lat)) as dis from meal,store where meal.store = store.store_name and price 
             BETWEEN :lowerbound and :upperbound and lower(meal_name) like lower(:meal_name)) as H where lower(H.store) like lower(:shop) and type like :type order by dis limit :num;';
             $stmt = $conn->prepare($query);
             $stmt -> bindValue(":long",(float)$_SESSION['longitude'],PDO::PARAM_STR);
@@ -59,7 +66,7 @@
             $stmt -> bindValue(":num",(int)floor($num/3),PDO::PARAM_INT);
         }
         if($dis=='medium'){
-            $query = 'SELECT * from (SELECT DISTINCT(store),type,((longitude-:long)*(longitude-:long)+(latitude-:lat)*(latitude-:lat)) as dis from meal,store where meal.store = store.store_name and price 
+            $query = 'SELECT * from (SELECT DISTINCT(store) as store,type,((longitude-:long)*(longitude-:long)+(latitude-:lat)*(latitude-:lat)) as dis from meal,store where meal.store = store.store_name and price 
             BETWEEN :lowerbound and :upperbound and lower(meal_name) like lower(:meal_name)) as H where lower(H.store) like lower(:shop) and type like :type order by dis limit :num1 offset :num;';
             $stmt = $conn->prepare($query);
             $stmt -> bindValue(":long",(float)$_SESSION['longitude'],PDO::PARAM_STR);
@@ -73,8 +80,8 @@
             $stmt -> bindValue(":num1",(int)(floor($num*2/3)-floor($num/3)),PDO::PARAM_INT);
         }
         if($dis=='near'){
-            $query = 'SELECT * from (SELECT DISTINCT(store),type,((longitude-:long)*(longitude-:long)+(latitude-:lat)*(latitude-:lat)) as dis from meal,store where meal.store = store.store_name and price 
-            BETWEEN :lowerbound and :upperbound and lower(meal_name) like lower(:meal_name)) as H where lower(H.store) like lower(:shop) and type like :type order by dis limit :num2 offset :num1';
+            $query = 'SELECT * from (SELECT * from (SELECT DISTINCT(store) as store,type,((longitude-:long)*(longitude-:long)+(latitude-:lat)*(latitude-:lat)) as dis from meal,store where meal.store = store.store_name and price 
+            BETWEEN :lowerbound and :upperbound and lower(meal_name) like lower(:meal_name)) as H where lower(H.store) like lower(:shop) and type like :type order by dis limit :num2 offset :num1) order by :sort_key desc';
             $stmt = $conn->prepare($query);
             $stmt -> bindValue(":long",(float)$_SESSION['longitude'],PDO::PARAM_STR);
             $stmt -> bindValue(":lat",(float)$_SESSION['latitude'],PDO::PARAM_STR);
@@ -85,6 +92,8 @@
             $stmt -> bindValue(":type",$cat,PDO::PARAM_STR);
             $stmt -> bindValue(":num1",(int)floor($num*2/3),PDO::PARAM_INT);
             $stmt -> bindValue(":num2",(int)($num-floor($num*2/3)),PDO::PARAM_INT);
+            $stmt -> bindValue(":sort_key",$sort_key,PDO::PARAM_STR);
+            $stmt -> bindValue(":sort",$_POST['sort'],PDO::PARAM_STR);
         }
         
         $stmt->execute(); 

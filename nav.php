@@ -223,7 +223,6 @@
                   <select class="form-control" id="sort_key">
                     <option>Shop</option>
                     <option>distance </option>
-                    <option>meal</option>  
                   </select>
                 </div>
                 <div class="col-sm-2">
