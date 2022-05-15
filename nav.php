@@ -158,9 +158,7 @@
             xhr.send("number="+document.getElementById("value").value);
           }
         </script>
-        <!-- 
-                
-        -->
+      
         <h3>Search</h3>
         <div class=" row  col-xs-8">
           <form class="form-horizontal">
@@ -520,7 +518,7 @@
         };
         xhttp.open("POST", "edit_meal.php", true);
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        xhttp.send("store_name="+"<?php echo $store_name?>"+"&"+"meal_name="+name+"&"
+        xhttp.send("store_name="+"<?php echo $store_name_fixed?>"+"&"+"meal_name="+name+"&"
                     +"price="+document.getElementById("price-"+name).value+"&"+"quantity="+document.getElementById("quantity-"+name).value);
       }
 
@@ -534,7 +532,7 @@
         };
         xhttp.open("POST", "delete_meal.php", true);
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        xhttp.send("store_name="+<?php echo $store_name?>+"&"+"meal_name="+name);
+        xhttp.send("store_name="+<?php echo $store_name_fixed?>+"&"+"meal_name="+name);
       }
 
       function search(){
