@@ -9,10 +9,10 @@
             $floatlong = (float)$_POST['longitude'];
             $floatlat = (float)$_POST['latitude'];
             $account = $_SESSION['account'];
-            if(strval($floatlat)!=$_POST['latitude'] || $floatlat > 90.0 || $floatlat < -90.0){
+            if(!preg_match("/^-?(\d|[1-9]+\d*|\.\d+|0\.\d+|[1-9]+\d*\.\d+)$/",$_POST['latitude']) || $floatlat > 90.0 || $floatlat < -90.0){
                 throw new Exception("緯度格式錯誤!");
             }
-            if(strval($floatlong)!=$_POST['longitude'] || $floatlong > 180.0 || $floatlong < -180.0){
+            if(!preg_match("/^-?(\d|[1-9]+\d*|\.\d+|0\.\d+|[1-9]+\d*\.\d+)$/",$_POST['longitude']) || $floatlong > 180.0 || $floatlong < -180.0){
                 throw new Exception("經度格式錯誤!");
             }
             $conn = new PDO("mysql:host = $dbservername;dbname=$dbname", $dbusername, $dbuserpassword);

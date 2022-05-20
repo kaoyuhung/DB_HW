@@ -249,19 +249,21 @@
                   <th scope="col">shop name</th>
                   <th scope="col">shop category</th>
                   <th scope="col">Distance</th>
-                  <th scope="col">
+                  
                   <?php
                   if(isset($_SESSION['search'])){
                     $store = json_decode($_SESSION['search'],true);
                     $pages = ceil(count($store)/5);
+                    echo '<th scope="col">';
                     echo '<select id="page" onchange="if(this.selectedIndex) ChangePage()">';
                     echo '<option value="-1">--</option>';
                     for($i=1;$i<=$pages;$i++){
-                      echo "<option>$i</option>";
+                       echo "<option>$i</option>";
                     }
                     echo '</select>';
+                    echo '</th>';
                     }
-                  ?></th>
+                  ?>
                 </tr>
               </thead>
               <?php
@@ -580,7 +582,6 @@
         xhttp.open("POST", "changepage.php", true);
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xhttp.send("page="+document.getElementById("page").value);
-
       }
   </script>
 
