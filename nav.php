@@ -550,7 +550,7 @@
         };
         xhttp.open("POST", "delete_meal.php", true);
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        xhttp.send("store_name="+<?php echo $store_name_fixed?>+"&"+"meal_name="+name);
+        xhttp.send("store_name="+"<?php echo $store_name_fixed?>"+"&"+"meal_name="+name);
       }
 
       function search(){
