@@ -98,6 +98,7 @@
         $store = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $_SESSION['search'] = json_encode($store); 
         $_SESSION['dist'] = $dis;
+        $_SESSION['page'] = 1;
     }
     catch (Exception $e){
         $msg = $e->getMessage();

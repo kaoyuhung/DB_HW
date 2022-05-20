@@ -240,7 +240,7 @@
           </form>
         </div>
         <div class="row">
-          <div class="  col-xs-8">
+          <div class="col-xs-8">
             <table class="table" style=" margin-top: 15px;">
               <thead>
                 <tr>
@@ -249,14 +249,26 @@
                   <th scope="col">shop name</th>
                   <th scope="col">shop category</th>
                   <th scope="col">Distance</th>
-               
+                  <th scope="col">
+                  <?php
+                  if(isset($_SESSION['search'])){
+                    $store = json_decode($_SESSION['search'],true);
+                    $pages = ceil(count($store)/5);
+                    echo '<select id="page" onchange="if(this.selectedIndex) ChangePage()">';
+                    echo '<option value="-1">--</option>';
+                    for($i=1;$i<=$pages;$i++){
+                      echo "<option>$i</option>";
+                    }
+                    echo '</select>';
+                    }
+                  ?></th>
                 </tr>
               </thead>
               <?php
                   if(isset($_SESSION['search'])){
-                    $store = json_decode($_SESSION['search'],true);
+                    
                     #var_dump($store);
-                    for($i=1;$i<=count($store);$i++){
+                    for($i=5*($_SESSION['page']-1)+1;$i<=count($store) && $i<=5*($_SESSION['page']-1)+5;$i++){
                       echo <<< EOT
                         <tbody>
                         <tr>
@@ -278,7 +290,7 @@
                 <!-- Modal -->
               <?php
                 if(isset($_SESSION['search'])){
-                  for($i=1;$i<=count($store);$i++){
+                  for($i=5*($_SESSION['page']-1)+1;$i<=count($store);$i++){
                     $store_name = $store[$i-1]['store'];
                     $stmt=$conn->prepare("select * from meal where store=:store");
                     $stmt->execute(array('store' =>  $store_name));
@@ -340,8 +352,8 @@
               ?>
         </div>
       </div>
-      
-      </div>
+    </div>
+
       <div id="menu1" class="tab-pane fade">
         <form action="create_store.php" method="post" class="fh5co-form animate-box" data-animate-effect="fadeIn">
           <h3> Start a business </h3>
@@ -546,7 +558,6 @@
             location.reload();
           }
         };
-        
         xhttp.open("POST", "search.php", true);
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xhttp.send("shop_name="+document.getElementById("search1").value
@@ -557,6 +568,19 @@
                     +"&"+"catogory="+document.getElementById("search6").value
                     +"&"+"sort_key="+document.getElementById("sort_key").value
                     +"&"+"sort="+document.getElementById("sort").value);
+      }
+      function ChangePage(){
+        var xhttp = new XMLHttpRequest();
+        
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            location.reload();
+          }
+        };
+        xhttp.open("POST", "changepage.php", true);
+        xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xhttp.send("page="+document.getElementById("page").value);
+
       }
   </script>
 

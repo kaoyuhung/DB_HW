@@ -1,0 +1,9 @@
+<?php
+    session_start();
+    $dbservername='localhost';
+    $dbname='hw2';
+    $dbusername='root';
+    $dbpassword='';
+    $page=$_REQUEST['page'];
+    $_SESSION['page']=intval($page);
+?>
