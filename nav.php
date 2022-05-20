@@ -11,9 +11,13 @@
   if ($stmt->rowCount()==0){
     $disable = "";
     $store_name="macdonald";
+    $store_name_fixed=$store_name;
     $store_type="fast food";
+    $store_type_fixed=$store_type;
     $latitude="121.00028167648875";
+    $latitude_fixed=$latitude;
     $longitude="24.78472733371133";
+    $longitude_fixed=$longitude;
   }
   else{
     $row = $stmt->fetch();
@@ -481,12 +485,12 @@
                         
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" id= $row[0] onclick = "edit_meal(this.id)">Edit</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" id="$row[0]" onclick = "edit_meal(this.id)">Edit</button>
                                 </div>
                               </div>
                             </div>
                           </div>
-                    <td><button type="button" id=$row[0] onclick = "del(this.id)" class="btn btn-danger">Delete</button></td>
+                    <td><button type="button" id="$row[0]" onclick = "del(this.id)" class="btn btn-danger">Delete</button></td>
                     </tr>
                     </tbody>
                     EOT;
