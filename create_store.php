@@ -37,16 +37,17 @@
         $stmt=$conn->prepare("select store_name from store where store_name=:store_name");
         $stmt->execute(array('store_name' => $name));
         if ($stmt->rowCount()==0){
-            $stmt = $conn->prepare("insert into store (store_name,type,owner,location) values 
-                                    (:store_name,:type,:owner,ST_GeomFromText('POINT(".$latitude." ".$longitude.")'))");
-            $stmt->execute(array('store_name' => $name, 'type' => $type, 'owner' => $_SESSION['account']));
+            $stmt = $conn->prepare("insert into store (store_name,type,latitude,longitude,owner,location) values 
+                                    (:store_name,:type,:lat,:long,:owner,ST_GeomFromText('POINT(".$lat." ".$long.")'))");
+            $stmt->execute(array('store_name' => $name, 'type' => $type, 'owner' => $_SESSION['account'],
+                                 'lat' => $lat,'long' => $long));
             $stmt = $conn->prepare("UPDATE user SET identity = 'manager' where account = :account");
             $stmt->execute(array('account' => $_SESSION['account']));
             $_SESSION['store_Authenticated'] = true;
             $_SESSION['store_name'] = $name;
             $_SESSION['store_type'] = $type;
-            $_SESSION['store_latitude'] = $floatlat;
-            $_SESSION['store_longitude'] = $floatlong;
+            $_SESSION['store_latitude'] = $lat;
+            $_SESSION['store_longitude'] = $long;
             $_SESSION['identity'] = 'manager';
             echo <<<EOT
             <!DOCTYPE html>
