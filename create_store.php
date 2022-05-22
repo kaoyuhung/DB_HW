@@ -2,7 +2,7 @@
     session_start();
     $_SESSION['Authenticated'] = false;
     $dbservername = 'localhost';
-    $dbname = 'hw2';
+    $dbname = 'hw';
     $dbusername = 'root';
     $dbpassword = '';
     
@@ -37,9 +37,9 @@
         $stmt=$conn->prepare("select store_name from store where store_name=:store_name");
         $stmt->execute(array('store_name' => $name));
         if ($stmt->rowCount()==0){
-            $stmt = $conn->prepare("insert into store values (:store_name,:type,:latitude,:longitude,:owner)");
-            $stmt->execute(array('store_name' => $name, 'type' => $type, 'latitude' => $lat, 'longitude' => $long, 
-            'owner' => $_SESSION['account']));
+            $stmt = $conn->prepare("insert into store (store_name,type,owner,location) values 
+                                    (:store_name,:type,:owner,ST_GeomFromText('POINT(".$latitude." ".$longitude.")'))");
+            $stmt->execute(array('store_name' => $name, 'type' => $type, 'owner' => $_SESSION['account']));
             $stmt = $conn->prepare("UPDATE user SET identity = 'manager' where account = :account");
             $stmt->execute(array('account' => $_SESSION['account']));
             $_SESSION['store_Authenticated'] = true;

@@ -1,6 +1,6 @@
 <?php
 $dbservername='localhost';
-$dbname='hw2';
+$dbname='hw';
 $dbusername='root';
 $dbpassword='';
 if (!isset($_REQUEST['account']) || $_REQUEST['account']==""){

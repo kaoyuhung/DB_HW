@@ -1,7 +1,7 @@
 <?php
     session_start();
     $dbservername='localhost';
-    $dbname='hw2';
+    $dbname='hw';
     $dbusername='root';
     $dbpassword='';
     $page=$_REQUEST['page'];

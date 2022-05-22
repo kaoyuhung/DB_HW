@@ -2,7 +2,7 @@
     session_start();
     $_SESSION['Authenticated'] = false;
     $dbservername = 'localhost';
-    $dbname = 'hw2';
+    $dbname = 'hw';
     $dbusername = 'root';
     $dbpassword = '';
 
@@ -52,10 +52,10 @@
         }
         $floatlong = (float)$longitude;
         $floatlat = (float)$latitude;
-        if(strval($floatlat)!=$latitude || $floatlat>90.0 || $floatlat<-90.0){
+        if(!preg_match("/^-?(\d|[1-9]+\d*|\.\d+|0\.\d+|[1-9]+\d*\.\d+)$/",$latitude) || $floatlat>90.0 || $floatlat<-90.0){
             throw new Exception("緯度格式錯誤!");
         }
-        if(strval($floatlong)!=$longitude || $floatlong>180.0 || $floatlong<-180.0){
+        if(!preg_match("/^-?(\d|[1-9]+\d*|\.\d+|0\.\d+|[1-9]+\d*\.\d+)$/",$longitude) || $floatlong>180.0 || $floatlong<-180.0){
             throw new Exception("經度格式錯誤!");
         }
         $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
@@ -65,9 +65,11 @@
         if ($stmt->rowCount()==0){
             $salt = strval(rand(1000, 9999));
             $hashvalue = hash('sha256', $salt . $pwd);
-            $stmt = $conn->prepare("insert into user values (:account,:pwd,:name,:identity,:latitude,:longitude,:phonenumber,:balance,:salt)");
+            $stmt = $conn->prepare("insert into user (account,password,name,identity,phonenumber,balance,salt,location) values 
+                                    (:account,:pwd,:name,:identity,:phonenumber,:balance,:salt,
+                                    ST_GeomFromText('POINT(".$latitude." ".$longitude.")'))");
             $stmt->execute(array('account' => $account, 'pwd' => $hashvalue,'name' => $name, 'identity' => 'user', 
-                                'latitude' => $floatlat, 'longitude' => $floatlong, 'phonenumber' => $phone, 'balance' => 0, 'salt' => $salt));
+                                 'phonenumber' => $phone, 'balance' => 0, 'salt' => $salt));
             $_SESSION['Authenticated'] = true;
             echo <<<EOT
             <!DOCTYPE html>

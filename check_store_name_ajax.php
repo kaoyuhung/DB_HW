@@ -1,6 +1,6 @@
 <?php
 $dbservername='localhost';
-$dbname='hw2';
+$dbname='hw';
 $dbusername='root';
 $dbpassword='';
 if (!isset($_REQUEST['store_name']) || $_REQUEST['store_name']=="" || preg_match("/^\s+$/",$_POST['store_name'])){

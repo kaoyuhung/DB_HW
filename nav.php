@@ -1,7 +1,7 @@
 <?php
   session_start();
   $dbservername='localhost';
-  $dbname='hw2';
+  $dbname='hw';
   $dbusername='root';
   $dbpassword='';
   $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
@@ -81,7 +81,7 @@
             Accouont: <?php echo $_SESSION['account']?>, 
             Name: <?php echo $_SESSION['name']?>, 
             PhoneNumber: <?php echo $_SESSION['phonenumber']?>,  
-            location: <?php echo $_SESSION['latitude']?>, <?php echo $_SESSION['longitude']?>
+            location: <?php echo $_SESSION['location']?>
             
             <button type="button " style="margin-left: 5px;" class=" btn btn-info " data-toggle="modal"
             data-target="#location">edit location</button>

@@ -2,7 +2,7 @@
    session_start();
    $_SESSION['Authenticated'] = false;
    $dbservername = 'Localhost';
-   $dbname = 'hw2';
+   $dbname = 'hw';
    $dbusername = 'root';
    $dbuserpassword = '';
 
@@ -17,19 +17,18 @@
         $pwd = $_POST['password'];
         $conn = new PDO("mysql:host = $dbservername;dbname=$dbname", $dbusername, $dbuserpassword);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("select * from user where account=:account");
+        $stmt = $conn->prepare("select *,ST_AsText(location) as 'loca' from user where account=:account");
         $stmt->execute(array('account' => $act));
         if ($stmt->rowCount()) {
             $row = $stmt->fetch();
             if ($row['password'] == hash('sha256', $row['salt'] . $pwd)) {
                 $_SESSION['Authenticated'] = true;
-                $_SESSION['account'] = $row[0];
-                $_SESSION['phonenumber'] = $row[6];
-                $_SESSION['name'] = $row[2];
-                $_SESSION['identity'] = $row[3];
-                $_SESSION['latitude'] = $row[4];
-                $_SESSION['longitude'] = $row[5];
-                $_SESSION['balance'] = $row[7];
+                $_SESSION['account'] = $row['account'];
+                $_SESSION['phonenumber'] = $row['phoneNumber'];
+                $_SESSION['name'] = $row['name'];
+                $_SESSION['identity'] = $row['identity'];
+                $_SESSION['location'] = $row['loca'];
+                $_SESSION['balance'] = $row['balance'];
                 header("Location:nav.php");
                 exit();
             } else {
