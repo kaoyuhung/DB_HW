@@ -67,7 +67,7 @@
             $hashvalue = hash('sha256', $salt . $pwd);
             $stmt = $conn->prepare("insert into user (account,password,name,identity,phonenumber,balance,salt,location) values 
                                     (:account,:pwd,:name,:identity,:phonenumber,:balance,:salt,
-                                    ST_GeomFromText('POINT(".$latitude." ".$longitude.")'))");
+                                    ST_GeomFromText('POINT(".$longitude." ".$latitude.")'))");
             $stmt->execute(array('account' => $account, 'pwd' => $hashvalue,'name' => $name, 'identity' => 'user', 
                                  'phonenumber' => $phone, 'balance' => 0, 'salt' => $salt));
             $_SESSION['Authenticated'] = true;

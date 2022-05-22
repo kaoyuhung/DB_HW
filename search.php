@@ -55,7 +55,7 @@
             $query = "SELECT * from (SELECT * from (SELECT DISTINCT(store) as store,type,ST_Distance_Sphere(:ulocation,store.location) as dis from meal,store where meal.store = store.store_name and price 
             BETWEEN :lowerbound and :upperbound and lower(meal_name) like lower(:meal_name)) as H where lower(H.store) like lower(:shop) and type like :type order by dis limit :num) as A order by $sort_key $sort";
             $stmt = $conn->prepare($query);
-            $stmt -> bindValue(":ulocation",$_SESSION['location'],PDO::PARAM_STR);
+            $stmt -> bindValue(":ulocation",$_SESSION['ulocation'],PDO::PARAM_STR);
             $stmt -> bindValue(":lowerbound",intval($lowerbound),PDO::PARAM_INT);
             $stmt -> bindValue(":upperbound",intval($upperbound),PDO::PARAM_INT);
             $stmt -> bindValue(":meal_name","%".$meal."%",PDO::PARAM_STR);
@@ -67,7 +67,7 @@
             $query = "SELECT * from (SELECT * from (SELECT DISTINCT(store) as store,type,ST_Distance_Sphere(:ulocation,store.location) as dis from meal,store where meal.store = store.store_name and price 
             BETWEEN :lowerbound and :upperbound and lower(meal_name) like lower(:meal_name)) as H where lower(H.store) like lower(:shop) and type like :type order by dis limit :num1 offset :num) as A order by $sort_key $sort";
             $stmt = $conn->prepare($query);
-            $stmt -> bindValue(":ulocation",$_SESSION['location'],PDO::PARAM_STR);
+            $stmt -> bindValue(":ulocation",$_SESSION['ulocation'],PDO::PARAM_STR);
             $stmt -> bindValue(":lowerbound",intval($lowerbound),PDO::PARAM_INT);
             $stmt -> bindValue(":upperbound",intval($upperbound),PDO::PARAM_INT);
             $stmt -> bindValue(":meal_name","%".$meal."%",PDO::PARAM_STR);
@@ -77,10 +77,10 @@
             $stmt -> bindValue(":num1",(int)(floor($num*2/3)-floor($num/3)),PDO::PARAM_INT);
         }
         if($dis=='near'){
-            $query = "SELECT * from (SELECT * from (SELECT DISTINCT(store) as store,type,ST_Distance_Sphere(POINT(1 1),store.location) as dis from meal,store where meal.store = store.store_name and price 
+            $query = "SELECT * from (SELECT * from (SELECT DISTINCT(store) as store,type,ST_Distance_Sphere(:ulocation,store.location) as dis from meal,store where meal.store = store.store_name and price 
             BETWEEN :lowerbound and :upperbound and lower(meal_name) like lower(:meal_name)) as H where lower(H.store) like lower(:shop) and type like :type order by dis limit :num2 offset :num1) as A order by $sort_key $sort";
             $stmt = $conn->prepare($query);
-            //$stmt -> bindValue(":ulocation",$_SESSION['location'],PDO::PARAM_STR);
+            $stmt -> bindValue(":ulocation",$_SESSION['ulocation'],PDO::PARAM_STR);
             $stmt -> bindValue(":lowerbound",intval($lowerbound),PDO::PARAM_INT);
             $stmt -> bindValue(":upperbound",intval($upperbound),PDO::PARAM_INT);
             $stmt -> bindValue(":meal_name","%".$meal."%",PDO::PARAM_STR);
@@ -97,6 +97,6 @@
     }
     catch (Exception $e){
         $msg = $e->getMessage();
-        echo $msg;
+        echo $msg.$_SESSION['ulocation'];
     }
 ?>

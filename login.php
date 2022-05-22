@@ -28,6 +28,7 @@
                 $_SESSION['name'] = $row['name'];
                 $_SESSION['identity'] = $row['identity'];
                 $_SESSION['location'] = $row['loca'];//'POINT(x,y)'
+                $_SESSION['ulocation'] = $row['location'];
                 $_SESSION['balance'] = $row['balance'];
                 header("Location:nav.php");
                 exit();

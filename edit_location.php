@@ -19,10 +19,14 @@
             }
             $conn = new PDO("mysql:host = $dbservername;dbname=$dbname", $dbusername, $dbuserpassword);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "UPDATE user SET location = ST_GeomFromText('POINT($latitude $longitude)') WHERE account=:account";
+            $sql = "UPDATE user SET location = ST_GeomFromText('POINT($longitude $latitude)') WHERE account=:account";
             $stmt=$conn->prepare($sql);
             $stmt->execute(array('account' => $account));
-            $_SESSION['location'] = 'POINT('.$latitude.' '.$longitude.')';
+            $_SESSION['location'] = 'POINT('.$longitude.','.$latitude.')';
+            $sql = "SELECT location from user WHERE account=:account";
+            $stmt=$conn->prepare($sql);
+            $stmt->execute(array('account' => $account));
+            $_SESSION['ulocation'] =$stmt->fetch()[0];
             echo "更改成功!";
         }
         catch (Exception $e){
