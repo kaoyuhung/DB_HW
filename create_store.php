@@ -23,7 +23,7 @@
         $type = $_POST['store_type'];
         $lat = $_POST['store_lat'];
         $long = $_POST['store_long'];
-
+        
         $floatlong = (double)$long;
         $floatlat = (double)$lat;   
         if(!preg_match("/^-?(\d|[1-9]+\d*|\.\d+|0\.\d+|[1-9]+\d*\.\d+)$/",$lat) || $floatlat>90.0 || $floatlat<-90.0){

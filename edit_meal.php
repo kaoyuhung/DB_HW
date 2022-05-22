@@ -20,8 +20,7 @@
         $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $stmt = $conn->prepare("UPDATE meal set price=:price,quantity=:quantity where store=:store_name and meal_name=:meal_name");
-        $stmt->execute(array('meal_name' => $_POST["meal_name"], 'price' => $price,'quantity' => $quantity,
-                                'store_name' =>  $_POST["store_name"]));
+        $stmt->execute(array('meal_name' => $_POST["meal_name"], 'price' => $price,'quantity' => $quantity, 'store_name' =>  $_POST["store_name"]));
         echo "success!";
     }
     catch (Exception $e){
