@@ -352,8 +352,8 @@
                               </tbody>
                               </table>  
                             </div>
-                            <label for="type">Type</label>
-                            <select name="type" id="type">
+                            <label for="type$i">Type</label>
+                            <select name="type" id="type$i">
                               <option>Delivery</option>
                               <option>Pick-up</option>
                             </select>
@@ -709,7 +709,7 @@
         var idx = (num % 5 == 0) ? 5 : num % 5;
         var dis = parseFloat(mytable.rows[idx].cells[3].innerHTML);
         var deliver_fee = Math.max(10,Math.round(dis*10));
-        var deli = (document.getElementById("type").value=="Delivery") ? deliver_fee : 0;
+        var deli = (document.getElementById("type"+num).value=="Delivery") ? deliver_fee : 0;
         var total = 0;
         var tbody = "";
         var flag = false;
@@ -724,7 +724,7 @@
              tbody += "<td>"+table.rows[i].cells[2].innerHTML+"</td>";
              tbody += "<td>"+price+"</td>";
              tbody += "<td>"+quantity+"</td>";
-             total += price*quantity;
+             total += price * quantity;
              tbody += "</tr>";
              flag = true;
           }
@@ -791,7 +791,7 @@
         var shop = mytable.rows[idx].cells[1].innerHTML;
         var dis = parseFloat(mytable.rows[idx].cells[3].innerHTML);
         var deliver_fee = Math.max(10,Math.round(dis*10));
-        var deli = (document.getElementById("type").value=="Delivery") ? deliver_fee : 0;
+        var deli = (document.getElementById("type"+num).value=="Delivery") ? deliver_fee : 0;
         var total = 0;
         var detail = [];
         detail.push({});
