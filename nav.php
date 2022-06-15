@@ -523,6 +523,7 @@
         <form class="form-horizontal">
           <div class="form-group">
             <label class="control-label col-sm-1" for="MyOrderstatus">Status</label>
+            
             <div class="col-sm-2">
               <select class="form-control" id = "MyOrderstatus" onchange=MyOrderStatusChange()>
                       <option>All</option>
@@ -531,13 +532,18 @@
                       <option>Cancel</option>
               </select>
             </div>
+
           </div>
+          
+          <button type="button" class="btn btn-danger" id="MyOrderSelectedCancel" onclick=funcMOcancel()>Cancel Selected Orders</button>
+         
         </form>
         <div class="row">
           <div class="col-xs-8">
             <table class="table" style=" margin-top: 15px;" id = "MyOrderTable">
             <thead>
                 <tr>
+                  <th scope="col"></th>
                   <th scope="col">Order ID</th>
                   <th scope="col">Status</th>
                   <th scope="col">Start</th>
@@ -843,6 +849,7 @@
               for(var i=0;i<data.length;i++){
                 if(document.getElementById("MyOrderstatus").value=="All" || document.getElementById("MyOrderstatus").value==data[i]['status']){
                   let row1 = document.createElement('tr');
+                  let row10 = document.createElement('td');
                   let row2 = document.createElement('th');
                   let row3 = document.createElement('td');
                   let row4 = document.createElement('td');
@@ -850,8 +857,15 @@
                   let row6 = document.createElement('td');
                   let row7 = document.createElement('td');
                   let row8 = document.createElement('td');
-                  
-                  
+
+                  if(data[i]['status']=="Not Finished"){
+                    row10.innerHTML = '<input type="checkbox" id="MyOrderBox'+(i+1)+'"></button>';
+                  }
+                  else{
+                    row10.innerHTML = '';
+                  }
+
+                  row1.appendChild(row10);
                   row2.setAttribute('scope', 'row');
                   row2.innerHTML=data[i]["OID"];   
                   row3.innerHTML=data[i]['status'];
@@ -871,8 +885,9 @@
 
                   if(data[i]['status']=="Not Finished"){
                     let row9 = document.createElement('td');
-                    row9.innerHTML = '<button type="button" class="btn btn-danger" onclick=CancelOrder('+data[i]["OID"]+')>Cancel</button>';
+                    row9.innerHTML = '<button type="button" class="btn btn-danger" onclick=CancelOrder(['+data[i]["OID"]+'])>Cancel</button>';
                     row1.appendChild(row9);
+                    
                   }
                   
                   document.querySelector('#MyOrderTableContent').appendChild(row1);
@@ -986,8 +1001,9 @@
                   if(data[i]['status']=="Not Finished"){
                     let row9 = document.createElement('td');
                     let row10 = document.createElement('td');
+
                     row9.innerHTML = '<button type="button" class="btn btn-success"  onclick=CompleteOrder('+data[i]["OID"]+')>Done</button>';
-                    row10.innerHTML = '<button type="button" class="btn btn-danger" onclick=CancelOrder('+data[i]["OID"]+')>Cancel</button>';
+                    row10.innerHTML = '<button type="button" class="btn btn-danger" onclick=CancelOrder("['+data[i]["OID"]+']")>Cancel</button>';
                                       
                     row1.appendChild(row9);
                     row1.appendChild(row10);
@@ -1114,6 +1130,7 @@
       }
 
       function CancelOrder(OID){
+    
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
@@ -1156,6 +1173,25 @@
       function TransactionRecordStatusChange(){
         $("#TransactionRecordTable tbody tr").remove();
         LoadTransactionRecord();
+      }
+
+      function funcMOcancel(){
+        var MOtable = document.getElementById('MyOrderTable');
+        var length = MOtable.rows.length;
+        var arr = [];
+        for(var i=1;i<length;i++){
+          if(document.getElementById('MyOrderBox'+i)){
+            if($('#MyOrderBox'+i).is(':checked')){
+              arr.push(MOtable.rows[i].cells[1].innerHTML);
+            }
+          }
+        }
+        if(arr.length){
+          CancelOrder(JSON.stringify(arr));
+        }
+        else{
+          alert("未選取!");
+        }
       }
   </script>
 

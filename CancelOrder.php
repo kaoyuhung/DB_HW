@@ -5,24 +5,34 @@
     $dbusername = 'root';
     $dbuserpassword = '';
     
-    $OID = (int)$_POST["OID"];
-
     $conn = new PDO("mysql:host = $dbservername;dbname=$dbname", $dbusername, $dbuserpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $conn->prepare("SELECT status,orderer,shop,price,detail from `order` where OID=:OID");
-    $stmt->execute(array('OID' => $OID));
-    $row = $stmt->fetch();
-    try{
-        if($row['status']=='Finished'){
-            throw new Exception("取消失敗!訂單狀態:Finished");
+    
+    $OIDs = json_decode($_POST["OID"]);
+    
+    for($i=0;$i<count($OIDs);$i++){
+        $OID = (int)$OIDs[$i];
+        $stmt = $conn->prepare("SELECT status from `order` where OID=:OID");
+        $stmt->execute(array('OID' => $OID));
+        $row = $stmt->fetch();
+        if($row['status']!='Not Finished'){
+            echo "取消失敗! 訂單已被完成或取消過";
+            exit(); 
         }
-        if($row['status']=='Cancel'){
-            throw new Exception("取消失敗!訂單已被取消");
-        }
+    }
+    // echo $_POST["OID"]."\n";
+    // echo count($OIDs);
+    // exit(); 
+    for($i=0;$i<count($OIDs);$i++){
+        echo $i;
+        echo "\n";
+        echo count($OIDs);
+        $OID = (int)$OIDs[$i];
+        $stmt = $conn->prepare("SELECT status,orderer,shop,price,detail from `order` where OID=:OID");
+        $stmt->execute(array('OID' => $OID));
+        $row = $stmt->fetch();
         $detail = json_decode($row['detail'],true);
-    
-    
         for($i=1;$i<count($detail);$i++){
             $stmt = $conn->prepare('UPDATE meal set quantity=quantity+:num where meal_name=:food and store=:shop');
             $stmt->execute(array('food' => $detail[$i]["meal"],'shop' => $detail[0]["shop"],'num' => (int)$detail[$i]["quantity"]));
@@ -84,12 +94,5 @@
         $stmt = $conn->prepare('INSERT INTO `transaction` (RID,user,type,time,trader,amount_change) values 
                                (:RID,:account,:type,:time,:trader,:val)');
         $stmt->execute(array('RID' => $RID,'account' => $shopowner, 'type' => 'Payment','time'=>$time,'trader'=>$orderer_name,'val'=>'-'.$val));
-
-
     }
-    catch (Exception $e){
-        echo $e->getMessage();
-    }
-    
-    
 ?>
