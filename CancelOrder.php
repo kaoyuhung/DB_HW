@@ -69,7 +69,7 @@
         
         $stmt = $conn->prepare('INSERT INTO `transaction` (RID,user,type,time,trader,amount_change) values 
                                (:RID,:account,:type,:time,:trader,:val)');
-        $stmt->execute(array('RID' => $RID,'account' => $orderer, 'type' => 'Payment','time'=>$time,'trader'=>$shop,'val'=>'+'.$val));
+        $stmt->execute(array('RID' => $RID,'account' => $orderer, 'type' => 'Receive','time'=>$time,'trader'=>$shop,'val'=>'+'.$val));
     
         
         while(1){
@@ -87,7 +87,7 @@
         
         $stmt = $conn->prepare('INSERT INTO `transaction` (RID,user,type,time,trader,amount_change) values 
                                (:RID,:account,:type,:time,:trader,:val)');
-        $stmt->execute(array('RID' => $RID,'account' => $shopowner, 'type' => 'Receive','time'=>$time,'trader'=>$orderer_name,'val'=>'-'.$val));
+        $stmt->execute(array('RID' => $RID,'account' => $shopowner, 'type' => 'Payment','time'=>$time,'trader'=>$orderer_name,'val'=>'-'.$val));
 
 
     }
