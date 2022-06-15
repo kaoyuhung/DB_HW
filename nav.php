@@ -574,11 +574,14 @@
             </div>
           </div>
         </form>
+        <button type="button" class="btn btn-success"  onclick=funcSOcomplete()>Finish Selected Orders</button>
+        <button type="button" class="btn btn-danger"  onclick=funcSOcancel()>Cancel Selected Orders</button>
         <div class="row">
           <div class="col-xs-8">
             <table class="table" style=" margin-top: 15px;" id = "ShopOrderTable">
             <thead>
                 <tr>
+                  <th scope="col"></th>
                   <th scope="col">Order ID</th>
                   <th scope="col">Status</th>
                   <th scope="col">Start</th>
@@ -969,7 +972,8 @@
           if (this.readyState == 4 && this.status == 200) {
             if(this.responseText){
               var json = this.responseText;
-              var data = JSON.parse(json)
+              var data = JSON.parse(json);
+              var idx = 0;
               for(var i=0;i<data.length;i++){
                 if(document.getElementById("ShopOrderstatus").value=="All" || document.getElementById("ShopOrderstatus").value==data[i]['status']){
                   let row1 = document.createElement('tr');
@@ -980,8 +984,15 @@
                   let row6 = document.createElement('td');
                   let row7 = document.createElement('td');
                   let row8 = document.createElement('td');
-                  
-                  
+                  let row10 = document.createElement('td');
+                  idx+=1;
+                  if(data[i]['status']=="Not Finished"){
+                    row10.innerHTML = '<input type="checkbox" id="ShopOrderBox'+idx+'"></button>';
+                  }
+                  else{
+                    row10.innerHTML = '';
+                  }
+                  row1.appendChild(row10);
                   row2.setAttribute('scope', 'row');
                   row2.innerHTML=data[i]["OID"];   
                   row3.innerHTML=data[i]['status'];
@@ -1003,8 +1014,8 @@
                     let row9 = document.createElement('td');
                     let row10 = document.createElement('td');
 
-                    row9.innerHTML = '<button type="button" class="btn btn-success"  onclick=CompleteOrder('+data[i]["OID"]+')>Done</button>';
-                    row10.innerHTML = '<button type="button" class="btn btn-danger" onclick=CancelOrder('+data[i]["OID"]+')>Cancel</button>';
+                    row9.innerHTML = '<button type="button" class="btn btn-success"  onclick=CompleteOrder(['+data[i]["OID"]+'])>Done</button>';
+                    row10.innerHTML = '<button type="button" class="btn btn-danger" onclick=CancelOrder(['+data[i]["OID"]+'])>Cancel</button>';
                                       
                     row1.appendChild(row9);
                     row1.appendChild(row10);
@@ -1134,6 +1145,7 @@
         if(OID[0]!='['){
           OID = JSON.stringify(OID);
         }
+       
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
@@ -1149,6 +1161,11 @@
       }
 
       function CompleteOrder(OID){
+
+        if(OID[0]!='['){
+          OID = JSON.stringify(OID);
+        }
+       
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
@@ -1191,6 +1208,44 @@
         }
         if(arr.length){
           CancelOrder(JSON.stringify(arr));
+        }
+        else{
+          alert("未選取!");
+        }
+      }
+
+      function funcSOcancel(){
+        var SOtable = document.getElementById('ShopOrderTable');
+        var length = SOtable.rows.length;
+        var arr = [];
+        for(var i=1;i<length;i++){
+          if(document.getElementById('ShopOrderBox'+i)){
+            if($('#ShopOrderBox'+i).is(':checked')){
+              arr.push(SOtable.rows[i].cells[1].innerHTML);
+            }
+          }
+        }
+        if(arr.length){
+          CancelOrder(JSON.stringify(arr));
+        }
+        else{
+          alert("未選取!");
+        }
+      }
+
+      function funcSOcomplete(){
+        var SOtable = document.getElementById('ShopOrderTable');
+        var length = SOtable.rows.length;
+        var arr = [];
+        for(var i=1;i<length;i++){
+          if(document.getElementById('ShopOrderBox'+i)){
+            if($('#ShopOrderBox'+i).is(':checked')){
+              arr.push(SOtable.rows[i].cells[1].innerHTML);
+            }
+          }
+        }
+        if(arr.length){
+          CompleteOrder(JSON.stringify(arr));
         }
         else{
           alert("未選取!");
