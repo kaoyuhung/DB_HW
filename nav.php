@@ -1130,6 +1130,11 @@
       }
 
       function CancelOrder(OID){
+        // alert(OID);
+        // return;
+        if(OID[0]!='['){
+          OID = JSON.stringify(OID);
+        }
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
@@ -1141,7 +1146,7 @@
         }
         xhttp.open("POST", "CancelOrder.php", true);
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        xhttp.send("OID="+JSON.stringify(OID));
+        xhttp.send("OID="+OID);
       }
 
       function CompleteOrder(OID){

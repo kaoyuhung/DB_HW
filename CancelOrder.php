@@ -10,9 +10,6 @@
 
    
     $OIDs = json_decode($_POST["OID"]);
-    echo $_POST["OID"]."\n";
-    echo $OIDs[0];
-    exit(); 
     for($i=0;$i<count($OIDs);$i++){
         $OID = (int)$OIDs[$i];
         $stmt = $conn->prepare("SELECT status from `order` where OID=:OID");
@@ -23,9 +20,9 @@
             exit(); 
         }
     }
-    // echo $_POST["OID"]."\n";
+    echo $_POST["OID"]."\n";
     // echo count($OIDs);
-    // exit(); 
+    exit(); 
     for($i=0;$i<count($OIDs);$i++){
         echo $i;
         $OID = (int)$OIDs[$i];
