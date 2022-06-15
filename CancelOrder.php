@@ -36,12 +36,12 @@
                                store.owner where store_name=:store)');
         $stmt->execute(array('num' =>(int)$row['price'],'store'=>$row["shop"]));
     
-    
-        $stmt = $conn->prepare('UPDATE `order` set status="Cancel" where OID=:OID');
-        $stmt->execute(array('OID' => $OID));
-
         $time = date("Y-m-d H:i:s");
       
+        $stmt = $conn->prepare('UPDATE `order` set status="Cancel", end=:END where OID=:OID');
+        $stmt->execute(array('OID' => $OID,'END' => $time));    
+
+        
         $stmt = $conn->prepare('SELECT shop,price,orderer from `order` where OID=:OID');
         $stmt->execute(array('OID' => $OID));
         $row = $stmt->fetch();
