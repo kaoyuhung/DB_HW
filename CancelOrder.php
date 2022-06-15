@@ -20,11 +20,10 @@
             exit(); 
         }
     }
-    echo $_POST["OID"]."\n";
+    // echo $_POST["OID"]."\n";
     // echo count($OIDs);
-    exit(); 
+    // exit(); 
     for($i=0;$i<count($OIDs);$i++){
-        echo $i;
         $OID = (int)$OIDs[$i];
         $stmt = $conn->prepare("SELECT status,orderer,shop,price,detail from `order` where OID=:OID");
         $stmt->execute(array('OID' => $OID));

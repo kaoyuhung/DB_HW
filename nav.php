@@ -846,6 +846,7 @@
             if(this.responseText){
               var json = this.responseText;
               var data = JSON.parse(json)
+              var idx = 0;
               for(var i=0;i<data.length;i++){
                 if(document.getElementById("MyOrderstatus").value=="All" || document.getElementById("MyOrderstatus").value==data[i]['status']){
                   let row1 = document.createElement('tr');
@@ -857,9 +858,9 @@
                   let row6 = document.createElement('td');
                   let row7 = document.createElement('td');
                   let row8 = document.createElement('td');
-
+                  idx+=1;
                   if(data[i]['status']=="Not Finished"){
-                    row10.innerHTML = '<input type="checkbox" id="MyOrderBox'+(i+1)+'"></button>';
+                    row10.innerHTML = '<input type="checkbox" id="MyOrderBox'+idx+'"></button>';
                   }
                   else{
                     row10.innerHTML = '';
@@ -1130,8 +1131,6 @@
       }
 
       function CancelOrder(OID){
-        // alert(OID);
-        // return;
         if(OID[0]!='['){
           OID = JSON.stringify(OID);
         }
