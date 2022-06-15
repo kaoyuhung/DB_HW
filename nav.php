@@ -1003,7 +1003,7 @@
                     let row10 = document.createElement('td');
 
                     row9.innerHTML = '<button type="button" class="btn btn-success"  onclick=CompleteOrder('+data[i]["OID"]+')>Done</button>';
-                    row10.innerHTML = '<button type="button" class="btn btn-danger" onclick=CancelOrder("['+data[i]["OID"]+']")>Cancel</button>';
+                    row10.innerHTML = '<button type="button" class="btn btn-danger" onclick=CancelOrder('+data[i]["OID"]+')>Cancel</button>';
                                       
                     row1.appendChild(row9);
                     row1.appendChild(row10);
@@ -1130,7 +1130,6 @@
       }
 
       function CancelOrder(OID){
-    
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
@@ -1142,7 +1141,7 @@
         }
         xhttp.open("POST", "CancelOrder.php", true);
         xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        xhttp.send("OID="+OID);
+        xhttp.send("OID="+JSON.stringify(OID));
       }
 
       function CompleteOrder(OID){

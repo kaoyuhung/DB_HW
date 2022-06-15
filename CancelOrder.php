@@ -8,9 +8,11 @@
     $conn = new PDO("mysql:host = $dbservername;dbname=$dbname", $dbusername, $dbuserpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    
+   
     $OIDs = json_decode($_POST["OID"]);
-    
+    echo $_POST["OID"]."\n";
+    echo $OIDs[0];
+    exit(); 
     for($i=0;$i<count($OIDs);$i++){
         $OID = (int)$OIDs[$i];
         $stmt = $conn->prepare("SELECT status from `order` where OID=:OID");
@@ -26,8 +28,6 @@
     // exit(); 
     for($i=0;$i<count($OIDs);$i++){
         echo $i;
-        echo "\n";
-        echo count($OIDs);
         $OID = (int)$OIDs[$i];
         $stmt = $conn->prepare("SELECT status,orderer,shop,price,detail from `order` where OID=:OID");
         $stmt->execute(array('OID' => $OID));
