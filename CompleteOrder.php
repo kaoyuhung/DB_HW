@@ -22,7 +22,4 @@
      $stmt = $conn->prepare('UPDATE `order` set status="Finished", end=:END where OID=:OID');
      $stmt->execute(array('OID' => $OID,'END' => $time));
  
-     $stmt = $conn->prepare('SELECT balance from user where account=:account');
-     $stmt->execute(array('account' => $_SESSION['account']));
-     $_SESSION['balance'] = $stmt->fetch()[0];
 ?>

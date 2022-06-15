@@ -9,6 +9,11 @@
   }
   $conn = new PDO("mysql:host=$dbservername;dbname=$dbname", $dbusername, $dbpassword);
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  $stmt=$conn->prepare("select balance from user where account=:account");
+  $stmt->execute(array('account' => $_SESSION['account']));
+  $_SESSION['balance'] = $stmt->fetch()[0];
+
   $stmt=$conn->prepare("select * from store where owner=:account");
   $stmt->execute(array('account' => $_SESSION['account']));
   if ($stmt->rowCount()==0){

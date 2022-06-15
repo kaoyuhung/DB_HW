@@ -36,10 +36,6 @@
                                store.owner where store_name=:store)');
         $stmt->execute(array('num' =>(int)$row['price'],'store'=>$row["shop"]));
     
-        $stmt = $conn->prepare('SELECT balance from user where account=:account');
-        $stmt->execute(array('account'=>$_SESSION['account']));
-    
-        $_SESSION['balance'] = $stmt->fetch()[0];
     
         $stmt = $conn->prepare('UPDATE `order` set status="Cancel" where OID=:OID');
         $stmt->execute(array('OID' => $OID));

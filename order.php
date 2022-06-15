@@ -61,10 +61,6 @@
                               store.owner where store_name=:store)');
         $stmt->execute(array('num' =>$cost,'store'=>$detail[0]["shop"]));
 
-        $stmt = $conn->prepare('SELECT balance from user where account=:account');
-        $stmt->execute(array('account'=>$_SESSION['account']));
-
-        $_SESSION['balance'] = $stmt->fetch()[0];
         
         while(1){
             $OID = rand(0,1000000);
